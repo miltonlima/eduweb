@@ -1,0 +1,882 @@
+/* ================================================
+   SAED Layout Styles
+   Modern, responsive layout with enhanced UX
+   ================================================ */
+
+/* ================================================
+   Root Variables & Global Settings
+   ================================================ */
+:root {
+    --saed-primary: #0d6efd;
+    --saed-primary-dark: #0b5ed7;
+    --saed-primary-light: #6ea8fe;
+    --saed-secondary: #6c757d;
+    --saed-success: #198754;
+    --saed-info: #0dcaf0;
+    --saed-warning: #ffc107;
+    --saed-danger: #dc3545;
+    
+    --saed-dark: #212529;
+    --saed-light: #f8f9fa;
+    --saed-white: #ffffff;
+    
+    --saed-shadow-sm: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+    --saed-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+    --saed-shadow-lg: 0 1rem 3rem rgba(0, 0, 0, 0.175);
+    
+    --saed-border-radius: 0.375rem;
+    --saed-border-radius-lg: 0.5rem;
+    --saed-border-radius-xl: 0.75rem;
+    
+    --saed-transition: all 0.3s ease;
+    --saed-transition-fast: all 0.15s ease;
+}
+
+/* ================================================
+   Body & HTML Base Styles
+   ================================================ */
+html {
+    position: relative;
+    min-height: 100%;
+    scroll-behavior: smooth;
+}
+
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    line-height: 1.6;
+    color: var(--saed-dark);
+    background-color: var(--saed-light);
+}
+
+/* ================================================
+   Accessibility - Skip to Content
+   ================================================ */
+.skip-to-main {
+    position: absolute;
+    top: -40px;
+    left: 6px;
+    background: var(--saed-primary);
+    color: white;
+    padding: 8px;
+    text-decoration: none;
+    border-radius: var(--saed-border-radius);
+    font-weight: 600;
+    z-index: 1100;
+    transition: var(--saed-transition-fast);
+    box-shadow: var(--saed-shadow);
+}
+
+.skip-to-main:focus {
+    top: 6px;
+    color: white;
+}
+
+/* ================================================
+   Header & Navigation Styles
+   ================================================ */
+.saed-header {
+    box-shadow: var(--saed-shadow-sm);
+    position: sticky;
+    top: 0;
+    z-index: 1020;
+    background: linear-gradient(135deg, var(--saed-primary) 0%, var(--saed-primary-dark) 100%);
+}
+
+.bg-gradient-primary {
+    background: linear-gradient(135deg, var(--saed-primary) 0%, var(--saed-primary-dark) 100%) !important;
+}
+
+/* Brand Styles */
+.saed-brand {
+    text-decoration: none;
+    transition: var(--saed-transition-fast);
+    padding: 0.4rem 0;
+    margin-right: 1rem; /* Add some space between brand and nav items */
+}
+
+.saed-brand:hover {
+    transform: translateY(-1px);
+}
+
+.brand-content {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.brand-icon {
+    font-size: 2rem;
+    color: #ffd700;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+    animation: brandPulse 3s ease-in-out infinite;
+}
+
+@keyframes brandPulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+}
+
+.brand-text {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.2;
+}
+
+.brand-name {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: white;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.brand-subtitle {
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.8);
+    font-weight: 400;
+    margin-top: -2px;
+}
+
+/* Navigation Items */
+.navbar-nav .nav-link {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    padding: 0.4rem 0.5rem;
+    color: rgba(255, 255, 255, 0.85) !important;
+    font-weight: 500;
+    border-radius: var(--saed-border-radius);
+    margin: 0 0.05rem;
+    transition: var(--saed-transition-fast);
+    position: relative;
+    min-height: 36px; /* Further reduced height */
+    justify-content: flex-start; /* Align content to start */
+}
+
+/* Create hover area for dropdowns */
+.nav-item.dropdown {
+    position: relative;
+}
+
+.nav-item.dropdown::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    height: 10px;
+    background: transparent;
+    z-index: 1000;
+}
+
+.navbar-nav .nav-link:hover {
+    color: white !important;
+    background-color: rgba(255, 255, 255, 0.1);
+    transform: translateY(-1px);
+}
+
+.navbar-nav .nav-link.active {
+    color: white !important;
+    background-color: rgba(255, 255, 255, 0.15);
+    font-weight: 600;
+}
+
+.navbar-nav .nav-link.active::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 30px;
+    height: 2px;
+    background-color: #ffd700;
+    border-radius: 1px;
+}
+
+.nav-icon {
+    font-size: 1rem;
+    width: 1.2rem;
+    text-align: center;
+    flex-shrink: 0; /* Prevent icon from shrinking */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.nav-text {
+    flex: 1;
+    text-align: left;
+    white-space: nowrap;
+}
+
+/* Dropdown Menus */
+.dropdown-menu-modern {
+    border: none;
+    box-shadow: var(--saed-shadow);
+    border-radius: var(--saed-border-radius-lg);
+    padding: 0.3rem 0;
+    margin-top: 0.15rem;
+    background: white;
+    min-width: 180px;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 1050;
+    display: none;
+}
+
+.dropdown-menu-modern.show {
+    display: block;
+}
+
+/* Override any conflicting styles */
+.nav-item.dropdown {
+    position: relative;
+}
+
+.dropdown-menu {
+    position: absolute !important;
+    top: 100% !important;
+    left: 0 !important;
+    z-index: 1050 !important;
+    transform: none !important;
+    margin-top: 0 !important;
+}
+
+/* Ensure proper dropdown positioning */
+.navbar-nav .dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 1000;
+    display: none;
+    float: none;
+    min-width: 10rem;
+    padding: 0.5rem 0;
+    margin: 0.125rem 0 0;
+    font-size: 1rem;
+    color: #212529;
+    text-align: left;
+    list-style: none;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid rgba(0,0,0,.15);
+    border-radius: 0.375rem;
+}
+
+.navbar-nav .dropdown-menu.show {
+    display: block;
+}
+
+/* Smart dropdown positioning to prevent overflow */
+.navbar-nav .dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: auto;
+    transform: none !important;
+    width: max-content;
+    max-width: 250px;
+}
+
+/* Bootstrap dropdown-menu-end support */
+.dropdown-menu-end {
+    --bs-position: end;
+    right: 0;
+    left: auto;
+}
+
+/* Fix for right-side dropdowns to prevent overflow */
+.navbar-nav .nav-item:last-child .dropdown-menu,
+.navbar-nav:last-child .dropdown-menu,
+.dropdown-menu-end {
+    left: auto !important;
+    right: 0 !important;
+    transform: none !important;
+}
+
+/* Ensure dropdowns stay within viewport bounds */
+.dropdown-menu {
+    position: absolute;
+    inset: 0px auto auto 0px;
+    margin: 0px;
+    transform: translate3d(0px, 40px, 0px);
+}
+
+.dropdown-menu-end {
+    position: absolute;
+    inset: 0px 0px auto auto !important;
+    margin: 0px;
+    transform: translate3d(0px, 40px, 0px) !important;
+}
+
+/* Viewport constraint for all dropdowns */
+.dropdown-menu {
+    max-width: min(250px, calc(100vw - 2rem));
+    overflow: hidden;
+}
+
+/* Ensure dropdown-menu-end aligns properly */
+@media (min-width: 992px) {
+    .dropdown-menu-end {
+        --bs-position: end;
+        right: 0 !important;
+        left: auto !important;
+        transform: translate3d(0px, 40px, 0px) !important;
+    }
+}
+
+/* Mobile dropdown styles */
+@media (max-width: 991.98px) {
+    .navbar-nav .dropdown-menu {
+        position: static !important;
+        float: none;
+        width: 100%;
+        max-width: none;
+        left: auto !important;
+        right: auto !important;
+        margin-top: 0.5rem;
+        background-color: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        border: none;
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15);
+        border-radius: var(--saed-border-radius);
+        transform: none !important;
+    }
+}
+
+/* Dropdown viewport constraint */
+.dropdown-menu {
+    max-width: calc(100vw - 2rem);
+    overflow: hidden;
+}
+
+/* Ensure dropdown doesn't exceed viewport boundaries */
+.navbar .dropdown-menu {
+    transform: none !important;
+}
+
+.dropdown-menu-modern .dropdown-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    color: var(--saed-dark);
+    font-weight: 500;
+    transition: var(--saed-transition-fast);
+    border: none;
+    background: transparent;
+    min-height: 36px; /* Reduced consistent height for dropdown items */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.dropdown-menu-modern .dropdown-item:hover {
+    background-color: var(--saed-light);
+    color: var(--saed-primary);
+    transform: translateX(2px);
+}
+
+.dropdown-icon {
+    font-size: 0.9rem;
+    width: 1.2rem;
+    text-align: center;
+}
+
+.dropdown-divider {
+    margin: 0.3rem 0;
+    border-color: rgba(0, 0, 0, 0.1);
+}
+
+.dropdown-item-text {
+    padding: 0.4rem 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.875rem;
+}
+
+/* Navbar alignment fixes */
+.navbar-nav {
+    align-items: center;
+    gap: 2px; /* Very tight spacing between nav items */
+}
+
+.navbar-nav .nav-item {
+    display: flex;
+    align-items: center;
+    margin: 0; /* Remove any default margins */
+}
+
+.navbar-expand-lg .navbar-nav {
+    flex-direction: row;
+    align-items: center;
+    gap: 2px; /* Consistent tight spacing */
+}
+
+.navbar-expand-lg .navbar-nav .nav-link {
+    padding-right: 0.5rem;
+    padding-left: 0.5rem;
+}
+
+/* Additional compact spacing overrides */
+.navbar-nav .nav-item + .nav-item {
+    margin-left: 0; /* Remove any additional spacing between items */
+}
+
+.navbar {
+    padding-top: 0.3rem;
+    padding-bottom: 0.3rem;
+}
+
+.container-fluid {
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+
+/* Mobile Navigation */
+@media (max-width: 991.98px) {
+    .navbar-collapse {
+        background: rgba(0, 0, 0, 0.1);
+        border-radius: var(--saed-border-radius-lg);
+        margin-top: 0.75rem;
+        padding: 0.5rem;
+        backdrop-filter: blur(10px);
+    }
+    
+    .navbar-nav .nav-link {
+        border-radius: var(--saed-border-radius);
+        margin: 0.05rem 0;
+        justify-content: flex-start;
+        padding: 0.4rem 0.6rem;
+    }
+    
+    .navbar-nav {
+        align-items: stretch;
+        gap: 1px; /* Very tight mobile spacing */
+    }
+    
+    .brand-subtitle {
+        display: none !important;
+    }
+    
+    .navbar {
+        padding-top: 0.25rem;
+        padding-bottom: 0.25rem;
+    }
+}
+
+/* ================================================
+   Main Content Area
+   ================================================ */
+.main-content {
+    flex: 1;
+    padding: 2rem 0;
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    min-height: calc(100vh - 200px);
+}
+
+.content-wrapper {
+    background: white;
+    border-radius: var(--saed-border-radius-xl);
+    box-shadow: var(--saed-shadow-sm);
+    padding: 2rem;
+    margin: 1rem 0;
+    position: relative;
+    overflow: hidden;
+}
+
+.content-wrapper::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--saed-primary), var(--saed-info), var(--saed-success));
+    border-radius: var(--saed-border-radius-xl) var(--saed-border-radius-xl) 0 0;
+}
+
+/* Breadcrumb Navigation */
+.breadcrumb-nav {
+    margin: 1rem 0;
+    padding: 0 1rem;
+}
+
+.breadcrumb {
+    background: transparent;
+    padding: 0.75rem 1.25rem;
+    margin: 0;
+    border-radius: var(--saed-border-radius-lg);
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(10px);
+    box-shadow: var(--saed-shadow-sm);
+}
+
+.breadcrumb-item + .breadcrumb-item::before {
+    content: "\f054";
+    font-family: "Font Awesome 6 Free";
+    font-weight: 900;
+    color: var(--saed-secondary);
+    margin: 0 0.5rem;
+}
+
+.breadcrumb-item a {
+    color: var(--saed-primary);
+    text-decoration: none;
+    font-weight: 500;
+    transition: var(--saed-transition-fast);
+}
+
+.breadcrumb-item a:hover {
+    color: var(--saed-primary-dark);
+    text-decoration: underline;
+}
+
+.breadcrumb-item.active {
+    color: var(--saed-secondary);
+    font-weight: 600;
+}
+
+/* ================================================
+   Footer Styles
+   ================================================ */
+.saed-footer {
+    background: linear-gradient(135deg, var(--saed-dark) 0%, #343a40 100%);
+    color: rgba(255, 255, 255, 0.8);
+    margin-top: auto;
+    position: relative;
+    overflow: hidden;
+}
+
+.saed-footer::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--saed-primary), var(--saed-info), var(--saed-success));
+}
+
+.footer-content {
+    padding: 3rem 0 1rem;
+}
+
+.footer-brand {
+    margin-bottom: 1rem;
+}
+
+.footer-icon {
+    font-size: 1.5rem;
+    color: #ffd700;
+    margin-right: 0.75rem;
+}
+
+.footer-text {
+    display: flex;
+    flex-direction: column;
+}
+
+.footer-title {
+    font-size: 1.25rem;
+    color: white;
+    font-weight: 700;
+}
+
+.footer-subtitle {
+    font-size: 0.875rem;
+    color: rgba(255, 255, 255, 0.7);
+    margin-top: 0.25rem;
+}
+
+.footer-description {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.9rem;
+    margin-top: 0.5rem;
+    line-height: 1.5;
+}
+
+.footer-info {
+    margin-bottom: 1rem;
+}
+
+.footer-links {
+    display: flex;
+    gap: 1.5rem;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+}
+
+.footer-link {
+    color: rgba(255, 255, 255, 0.7);
+    text-decoration: none;
+    font-weight: 500;
+    transition: var(--saed-transition-fast);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.footer-link:hover {
+    color: var(--saed-primary-light);
+    transform: translateY(-1px);
+}
+
+.footer-meta {
+    text-align: right;
+    font-size: 0.875rem;
+}
+
+.footer-meta > div {
+    margin-bottom: 0.5rem;
+}
+
+.copyright {
+    color: rgba(255, 255, 255, 0.8);
+    font-weight: 500;
+}
+
+.version {
+    color: rgba(255, 255, 255, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 0.5rem;
+}
+
+.tech-stack {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    margin-top: 0.5rem;
+}
+
+.tech-item {
+    color: rgba(255, 255, 255, 0.5);
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    font-size: 0.8rem;
+}
+
+/* Back to Top Button */
+.back-to-top {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    width: 50px;
+    height: 50px;
+    background: var(--saed-primary);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    font-size: 1.2rem;
+    cursor: pointer;
+    box-shadow: var(--saed-shadow);
+    transition: var(--saed-transition);
+    opacity: 0;
+    transform: translateY(100px);
+    z-index: 1000;
+}
+
+.back-to-top.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.back-to-top:hover {
+    background: var(--saed-primary-dark);
+    transform: translateY(-2px);
+    box-shadow: var(--saed-shadow-lg);
+}
+
+/* ================================================
+   Responsive Design
+   ================================================ */
+@media (max-width: 767.98px) {
+    .content-wrapper {
+        margin: 0.5rem;
+        padding: 1.5rem;
+        border-radius: var(--saed-border-radius-lg);
+    }
+    
+    .main-content {
+        padding: 1rem 0;
+    }
+    
+    .footer-content {
+        padding: 2rem 0 1rem;
+    }
+    
+    .footer-links {
+        justify-content: flex-start;
+        margin-bottom: 1rem;
+    }
+    
+    .footer-meta {
+        text-align: left;
+    }
+    
+    .tech-stack {
+        justify-content: flex-start;
+    }
+    
+    .version {
+        justify-content: flex-start;
+    }
+    
+    .back-to-top {
+        bottom: 1rem;
+        right: 1rem;
+        width: 45px;
+        height: 45px;
+    }
+}
+
+@media (max-width: 575.98px) {
+    .brand-name {
+        font-size: 1.25rem;
+    }
+    
+    .nav-text {
+        font-size: 0.9rem;
+    }
+    
+    .footer-links {
+        flex-direction: column;
+        gap: 0.75rem;
+    }
+}
+
+/* ================================================
+   Print Styles
+   ================================================ */
+@media print {
+    .saed-header,
+    .saed-footer,
+    .back-to-top,
+    .breadcrumb-nav {
+        display: none !important;
+    }
+    
+    .main-content {
+        padding: 0;
+        background: white;
+    }
+    
+    .content-wrapper {
+        box-shadow: none;
+        padding: 0;
+        margin: 0;
+    }
+    
+    body {
+        background: white;
+    }
+}
+
+/* ================================================
+   Dark Mode Support (Future Enhancement)
+   ================================================ */
+@media (prefers-color-scheme: dark) {
+    /* Dark mode styles can be added here in future updates */
+}
+
+/* ================================================
+   User Email Truncation
+   ================================================ */
+.user-email-display {
+    max-width: 160px;
+    overflow: hidden;
+    white-space: nowrap;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+/* Custom email truncation for better UX */
+.user-email-truncated {
+    font-family: inherit;
+    cursor: help; /* Show that it's truncated and hoverable */
+}
+
+/* Responsive email display */
+@media (max-width: 1199.98px) {
+    .user-email-display {
+        max-width: 120px;
+    }
+}
+
+@media (max-width: 991.98px) {
+    .user-email-display {
+        max-width: none; /* Show full email on mobile */
+    }
+}
+
+/* ================================================
+   Animation Classes
+   ================================================ */
+.fade-in {
+    animation: fadeIn 0.5s ease-in;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.slide-in-left {
+    animation: slideInLeft 0.5s ease-out;
+}
+
+@keyframes slideInLeft {
+    from { opacity: 0; transform: translateX(-30px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+.slide-in-right {
+    animation: slideInRight 0.5s ease-out;
+}
+
+@keyframes slideInRight {
+    from { opacity: 0; transform: translateX(30px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+/* ================================================
+   Focus States for Accessibility
+   ================================================ */
+.nav-link:focus,
+.dropdown-item:focus,
+.footer-link:focus,
+.back-to-top:focus {
+    outline: 2px solid var(--saed-warning);
+    outline-offset: 2px;
+}
+
+/* ================================================
+   Loading States
+   ================================================ */
+.loading {
+    position: relative;
+    overflow: hidden;
+}
+
+.loading::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.8), transparent);
+    animation: loading 1.5s infinite;
+}
+
+@keyframes loading {
+    0% { left: -100%; }
+    100% { left: 100%; }
+}

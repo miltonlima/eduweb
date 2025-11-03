@@ -1,0 +1,174 @@
+@model MvcSaed.Models.ViewModels.LoginViewModel
+@{
+    ViewData["Title"] = "Login";
+}
+
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-6 col-lg-5">
+            <div class="card shadow-lg border-0">
+                <div class="card-header bg-gradient-primary text-white text-center py-4">
+                    <div class="d-flex align-items-center justify-content-center mb-2">
+                        <i class="fas fa-trophy fa-2x text-warning me-3"></i>
+                        <div>
+                            <h3 class="mb-0">SAED</h3>
+                            <small class="opacity-75">Sistema de Atividades Educacionais</small>
+                        </div>
+                    </div>
+                    <h4 class="mb-0 mt-3">
+                        <i class="fas fa-sign-in-alt me-2"></i>
+                        Entrar no Sistema
+                    </h4>
+                </div>
+                
+                <div class="card-body p-4">
+                    @if (!ViewData.ModelState.IsValid)
+                    {
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            <i class="fas fa-exclamation-triangle me-2"></i>
+                            <div asp-validation-summary="All" class="mb-0"></div>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    }
+
+                    <form asp-action="Login" method="post" class="needs-validation" novalidate>
+                        <input asp-for="ReturnUrl" type="hidden" />
+                        
+                        <div class="mb-3">
+                            <label asp-for="Email" class="form-label">
+                                <i class="fas fa-envelope me-2 text-primary"></i>
+                                @Html.DisplayNameFor(m => m.Email)
+                            </label>
+                            <input asp-for="Email" class="form-control form-control-lg" 
+                                   placeholder="Digite seu email" autocomplete="username" required />
+                            <span asp-validation-for="Email" class="text-danger small"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Password" class="form-label">
+                                <i class="fas fa-lock me-2 text-primary"></i>
+                                @Html.DisplayNameFor(m => m.Password)
+                            </label>
+                            <div class="input-group">
+                                <input asp-for="Password" class="form-control form-control-lg" 
+                                       placeholder="Digite sua senha" autocomplete="current-password" required />
+                                <button class="btn btn-outline-secondary" type="button" onclick="togglePassword('Password')">
+                                    <i class="fas fa-eye" id="Password-eye"></i>
+                                </button>
+                            </div>
+                            <span asp-validation-for="Password" class="text-danger small"></span>
+                        </div>
+
+                        <div class="mb-3 form-check">
+                            <input asp-for="RememberMe" class="form-check-input" />
+                            <label asp-for="RememberMe" class="form-check-label">
+                                <i class="fas fa-clock me-1 text-info"></i>
+                                @Html.DisplayNameFor(m => m.RememberMe)
+                            </label>
+                        </div>
+
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-primary btn-lg">
+                                <i class="fas fa-sign-in-alt me-2"></i>
+                                Entrar
+                            </button>
+                        </div>
+                    </form>
+
+                    <hr class="my-4">
+
+                    <div class="text-center">
+                        <p class="mb-2">
+                            <i class="fas fa-user-plus me-2 text-success"></i>
+                            Não tem uma conta?
+                        </p>
+                        <a asp-action="Register" asp-route-returnUrl="@ViewData["ReturnUrl"]" 
+                           class="btn btn-outline-success">
+                            <i class="fas fa-user-plus me-2"></i>
+                            Criar Nova Conta
+                        </a>
+                    </div>
+                </div>
+
+                <div class="card-footer text-center bg-light py-3">
+                    <small class="text-muted">
+                        <i class="fas fa-shield-alt me-1"></i>
+                        Seus dados estão seguros conosco
+                    </small>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    
+    <script>
+        function togglePassword(fieldId) {
+            const field = document.getElementById(fieldId);
+            const eye = document.getElementById(fieldId + '-eye');
+            
+            if (field.type === 'password') {
+                field.type = 'text';
+                eye.classList.remove('fa-eye');
+                eye.classList.add('fa-eye-slash');
+            } else {
+                field.type = 'password';
+                eye.classList.remove('fa-eye-slash');
+                eye.classList.add('fa-eye');
+            }
+        }
+
+        // Bootstrap form validation
+        (function() {
+            'use strict';
+            window.addEventListener('load', function() {
+                var forms = document.getElementsByClassName('needs-validation');
+                var validation = Array.prototype.filter.call(forms, function(form) {
+                    form.addEventListener('submit', function(event) {
+                        if (form.checkValidity() === false) {
+                            event.preventDefault();
+                            event.stopPropagation();
+                        }
+                        form.classList.add('was-validated');
+                    }, false);
+                });
+            }, false);
+        })();
+    </script>
+}
+
+<style>
+    .bg-gradient-primary {
+        background: linear-gradient(135deg, #0d6efd 0%, #0b5ed7 100%);
+    }
+    
+    .card {
+        border-radius: 15px;
+        overflow: hidden;
+    }
+    
+    .form-control:focus {
+        border-color: #0d6efd;
+        box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.25);
+    }
+    
+    .btn-primary {
+        background: linear-gradient(135deg, #0d6efd 0%, #0b5ed7 100%);
+        border: none;
+    }
+    
+    .btn-primary:hover {
+        background: linear-gradient(135deg, #0b5ed7 0%, #0a58ca 100%);
+        transform: translateY(-1px);
+    }
+    
+    .form-control-lg {
+        border-radius: 8px;
+    }
+    
+    .input-group .btn {
+        border-radius: 0 8px 8px 0;
+    }
+</style>

@@ -1,0 +1,31 @@
+@model IEnumerable<MvcSaed.Models.InscricaoTurma>
+@{
+    ViewData["Title"] = "Inscrições de Alunos em Turmas";
+}
+<h1>Inscrições de Alunos em Turmas</h1>
+<p>
+    <a asp-action="Create" class="btn btn-primary">Nova Inscrição</a>
+</p>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Aluno</th>
+            <th>Turma</th>
+            <th>Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>@(item.Pessoa?.Nome ?? "N/A")</td>
+            <td>@(item.Turma?.Nome ?? "N/A")</td>
+            <td>
+                <form asp-action="Delete" method="post" style="display:inline">
+                    <input type="hidden" name="id" value="@item.Id" />
+                    <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Remover inscrição?');">Remover</button>
+                </form>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

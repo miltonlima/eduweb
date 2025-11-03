@@ -1,0 +1,30 @@
+@model MvcSaed.Models.Unidade
+@{
+    ViewData["Title"] = "Excluir Unidade";
+}
+<h1>Excluir Unidade</h1>
+<hr />
+<dl class="row">
+    <dt class="col-sm-3">ID</dt>
+    <dd class="col-sm-9"><span class="badge bg-primary">@Model.Id</span></dd>
+    <dt class="col-sm-3">Nome</dt>
+    <dd class="col-sm-9">@Model.Nome</dd>
+    <dt class="col-sm-3">Turma</dt>
+    <dd class="col-sm-9">
+        @if(Model.Turma != null)
+        {
+            <span class="badge bg-primary">@Model.Turma.Nome</span>
+        }
+        else
+        {
+            <span class="text-muted">Nenhuma turma associada</span>
+        }
+    </dd>
+    <dt class="col-sm-3">Endereço</dt>
+    <dd class="col-sm-9">@Model.Endereco</dd>
+</dl>
+<form asp-action="Delete" method="post">
+    <input type="hidden" asp-for="Id" />
+    <button type="submit" class="btn btn-danger" onclick="return confirm('Tem certeza que deseja excluir esta unidade?')">Excluir</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+</form>

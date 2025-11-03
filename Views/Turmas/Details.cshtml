@@ -1,0 +1,34 @@
+@model MvcSaed.Models.Turma
+@{
+    ViewData["Title"] = "Detalhes da Turma";
+}
+<h1>Detalhes da Turma</h1>
+<hr />
+<dl class="row">
+    <dt class="col-sm-3">ID</dt>
+    <dd class="col-sm-9"><span class="badge bg-secondary">@Model?.Id</span></dd>
+    <dt class="col-sm-3">@Html.DisplayNameFor(model => model.Nome)</dt>
+    <dd class="col-sm-9">@Html.DisplayFor(model => model.Nome)</dd>
+    <dt class="col-sm-3">@Html.DisplayNameFor(model => model.DataInicio)</dt>
+    <dd class="col-sm-9">@Html.DisplayFor(model => model.DataInicio)</dd>
+    <dt class="col-sm-3">@Html.DisplayNameFor(model => model.DataFim)</dt>
+    <dd class="col-sm-9">@Html.DisplayFor(model => model.DataFim)</dd>
+    <dt class="col-sm-3">Unidade</dt>
+    <dd class="col-sm-9">
+        @if (Model?.Unidade != null)
+        {
+            <span class="badge bg-success me-1">@Model.Unidade.Id</span>
+            <span>@Model.Unidade.Nome</span>
+        }
+        else
+        {
+            <span class="text-muted">Nenhuma unidade associada</span>
+        }
+    </dd>
+    <dt class="col-sm-3">@Html.DisplayNameFor(model => model.Status)</dt>
+    <dd class="col-sm-9">@Html.DisplayFor(model => model.Status)</dd>
+</dl>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.Id" class="btn btn-warning">Editar</a>
+    <a asp-action="Index" class="btn btn-secondary">Voltar à Lista</a>
+</div>

@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="SAED - Sistema de Atividades Educacionais. Gerencie estudantes, turmas, modalidades e atividades educacionais de forma eficiente." />
+    <meta name="keywords" content="sistema educacional, atividades educacionais, estudantes, turmas, modalidades, educação" />
+    <meta name="author" content="SAED System" />
+    
+    <title>@ViewData["Title"] - SAED | Sistema de Atividades Educacionais</title>
+    
+    <!-- Preload critical resources -->
+    <link rel="preload" href="~/lib/bootstrap/dist/css/bootstrap.min.css" as="style" />
+    <link rel="preload" href="~/css/site.css" as="style" />
+    
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" 
+          integrity="sha512-Avb2QiuDEEvB4bZJYdft2mNjVShBftLdPG8FJ0V7irTLQ8Uo0qcPxh4Plq7G5tGm0rU+1SPhVotteLpBERwTkw==" 
+          crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/layout.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/MvcSaed.styles.css" asp-append-version="true" />
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="~/favicon.ico" />
+    
+    <!-- Theme color for mobile browsers -->
+    <meta name="theme-color" content="#0d6efd" />
+</head>
+<body>
+    <!-- Skip to main content for accessibility -->
+    <a class="skip-to-main" href="#main-content">Pular para o conteúdo principal</a>
+    
+    <header class="saed-header">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-gradient-primary shadow-sm" role="navigation" aria-label="Navegação principal">
+            <div class="container-fluid">
+                <!-- Brand -->
+                <a class="navbar-brand saed-brand" asp-area="" asp-controller="Home" asp-action="Index" title="SAED - Página Inicial">
+                    <div class="brand-content">
+                        <i class="fas fa-trophy brand-icon" aria-hidden="true"></i>
+                        <div class="brand-text">
+                            <span class="brand-name">SAED</span>
+                            <small class="brand-subtitle d-none d-md-block">Sistema de Atividades Educacionais</small>
+                        </div>
+                    </div>
+                </a>
+                
+                <!-- Mobile menu toggle -->
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#saed-navbar" 
+                        aria-controls="saed-navbar" aria-expanded="false" aria-label="Alternar navegação">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                
+                <!-- Navigation menu -->
+                <div class="collapse navbar-collapse" id="saed-navbar">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link @(ViewContext.RouteData.Values["controller"]?.ToString() == "Home" ? "active" : "")" 
+                               asp-area="" asp-controller="Home" asp-action="Index"
+                               title="Página inicial do sistema">
+                                <i class="fas fa-home nav-icon" aria-hidden="true"></i>
+                                <span class="nav-text">Início</span>
+                            </a>
+                        </li>
+                        
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle @(ViewContext.RouteData.Values["controller"]?.ToString() == "Pessoas" ? "active" : "")" 
+                               href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"
+                               title="Gerenciar estudantes">
+                                <i class="fas fa-users nav-icon" aria-hidden="true"></i>
+                                <span class="nav-text">Estudantes</span>
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-modern">
+                                <li>
+                                    <a class="dropdown-item" asp-controller="Pessoas" asp-action="Index"
+                                       title="Ver lista de todos os estudantes">
+                                        <i class="fas fa-list dropdown-icon" aria-hidden="true"></i>
+                                        <span>Ver Todos</span>
+                                    </a>
+                                </li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li>
+                                    <a class="dropdown-item" asp-controller="Pessoas" asp-action="Create"
+                                       title="Cadastrar novo estudante">
+                                        <i class="fas fa-plus dropdown-icon text-success" aria-hidden="true"></i>
+                                        <span>Cadastrar Novo</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link @(ViewContext.RouteData.Values["controller"]?.ToString() == "Unidades" ? "active" : "")" 
+                               asp-area="" asp-controller="Unidades" asp-action="Index"
+                               title="Gerenciar unidades">
+                                <i class="fas fa-building nav-icon" aria-hidden="true"></i>
+                                <span class="nav-text">Unidades</span>
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link @(ViewContext.RouteData.Values["controller"]?.ToString() == "Modalidades" ? "active" : "")" 
+                               asp-area="" asp-controller="Modalidades" asp-action="Index"
+                               title="Gerenciar modalidades educacionais">
+                                <i class="fas fa-futbol nav-icon" aria-hidden="true"></i>
+                                <span class="nav-text">Modalidades</span>
+                            </a>
+                        </li>
+                        
+                        <li class="nav-item">
+                            <a class="nav-link @(ViewContext.RouteData.Values["controller"]?.ToString() == "Turmas" ? "active" : "")" 
+                               asp-area="" asp-controller="Turmas" asp-action="Index"
+                               title="Gerenciar turmas">
+                                <i class="fas fa-chalkboard nav-icon" aria-hidden="true"></i>
+                                <span class="nav-text">Turmas</span>
+                            </a>
+                        </li>
+                        
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle @(ViewContext.RouteData.Values["controller"]?.ToString() == "Inscricoes" ? "active" : "")" 
+                               href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"
+                               title="Gerenciar inscrições">
+                                <i class="fas fa-clipboard-list nav-icon" aria-hidden="true"></i>
+                                <span class="nav-text">Inscrições</span>
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-modern">
+                                <li>
+                                    <a class="dropdown-item" asp-controller="Inscricoes" asp-action="Index"
+                                       title="Ver todas as inscrições">
+                                        <i class="fas fa-list dropdown-icon" aria-hidden="true"></i>
+                                        <span>Ver Inscrições</span>
+                                    </a>
+                                </li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li>
+                                    <a class="dropdown-item" asp-controller="Inscricoes" asp-action="Create"
+                                       title="Criar nova inscrição">
+                                        <i class="fas fa-plus dropdown-icon text-success" aria-hidden="true"></i>
+                                        <span>Nova Inscrição</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                    
+                    <!-- Right side navigation items -->
+                    <ul class="navbar-nav">
+                        @if (User.Identity?.IsAuthenticated == true)
+                        {
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" 
+                                   aria-expanded="false" title="Perfil do usuário">
+                                    <i class="fas fa-user-circle nav-icon" aria-hidden="true"></i>
+                                    <span class="nav-text user-email-display">@User.Identity.Name</span>
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-modern">
+                                    <li>
+                                        <a class="dropdown-item" asp-controller="Account" asp-action="Profile"
+                                           title="Ver e editar perfil">
+                                            <i class="fas fa-user dropdown-icon text-primary" aria-hidden="true"></i>
+                                            <span>Meu Perfil</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" asp-controller="Account" asp-action="ChangePassword"
+                                           title="Alterar senha">
+                                            <i class="fas fa-key dropdown-icon text-warning" aria-hidden="true"></i>
+                                            <span>Alterar Senha</span>
+                                        </a>
+                                    </li>
+                                    <li><hr class="dropdown-divider"></li>
+                                    <li>
+                                        <form asp-controller="Account" asp-action="Logout" method="post" class="d-inline">
+                                            <button type="submit" class="dropdown-item" title="Sair do sistema">
+                                                <i class="fas fa-sign-out-alt dropdown-icon text-danger" aria-hidden="true"></i>
+                                                <span>Sair</span>
+                                            </button>
+                                        </form>
+                                    </li>
+                                </ul>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" asp-controller="Account" asp-action="Login"
+                                   title="Fazer login no sistema">
+                                    <i class="fas fa-sign-in-alt nav-icon" aria-hidden="true"></i>
+                                    <span class="nav-text">Entrar</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" asp-controller="Account" asp-action="Register"
+                                   title="Criar nova conta">
+                                    <i class="fas fa-user-plus nav-icon" aria-hidden="true"></i>
+                                    <span class="nav-text">Registrar</span>
+                                </a>
+                            </li>
+                        }
+                        
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" 
+                               aria-expanded="false" title="Configurações e ajuda">
+                                <i class="fas fa-cog nav-icon" aria-hidden="true"></i>
+                                <span class="nav-text d-lg-none">Menu</span>
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end dropdown-menu-modern">
+                                <li>
+                                    <a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="Privacy"
+                                       title="Política de privacidade">
+                                        <i class="fas fa-shield-alt dropdown-icon text-info" aria-hidden="true"></i>
+                                        <span>Privacidade</span>
+                                    </a>
+                                </li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li>
+                                    <span class="dropdown-item-text">
+                                        <i class="fas fa-info-circle dropdown-icon text-muted" aria-hidden="true"></i>
+                                        <span class="text-muted">Versão 1.0.0</span>
+                                    </span>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <!-- Main content area -->
+    <main id="main-content" class="main-content" role="main" tabindex="-1">
+        <div class="container-fluid">
+            <!-- Breadcrumb navigation -->
+            @if (ViewContext.RouteData.Values["controller"]?.ToString() != "Home" || ViewContext.RouteData.Values["action"]?.ToString() != "Index")
+            {
+                <nav aria-label="Navegação estrutural" class="breadcrumb-nav">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item">
+                            <a asp-controller="Home" asp-action="Index" title="Voltar à página inicial">
+                                <i class="fas fa-home" aria-hidden="true"></i> Início
+                            </a>
+                        </li>
+                        <li class="breadcrumb-item active" aria-current="page">
+                            @ViewData["Title"]
+                        </li>
+                    </ol>
+                </nav>
+            }
+
+            <!-- Page content -->
+            <div class="content-wrapper">
+                @RenderBody()
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="saed-footer mt-auto" role="contentinfo">
+        <div class="footer-content">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-md-6">
+                        <div class="footer-brand">
+                            <div class="d-flex align-items-center mb-2">
+                                <i class="fas fa-trophy footer-icon" aria-hidden="true"></i>
+                                <div class="footer-text">
+                                    <strong class="footer-title">SAED</strong>
+                                    <div class="footer-subtitle">Sistema de Atividades Educacionais</div>
+                                </div>
+                            </div>
+                            <p class="footer-description">
+                                Plataforma completa para gerenciamento de atividades educacionais.
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6">
+                        <div class="footer-info text-md-end">
+                            <div class="footer-links mb-3">
+                                <a asp-area="" asp-controller="Home" asp-action="Privacy" 
+                                   class="footer-link" title="Política de privacidade">
+                                    <i class="fas fa-shield-alt" aria-hidden="true"></i>
+                                    Privacidade
+                                </a>
+                                <a href="https://github.com/miltonlima/novo-saed" 
+                                   class="footer-link" title="Código fonte no GitHub" 
+                                   target="_blank" rel="noopener noreferrer">
+                                    <i class="fab fa-github" aria-hidden="true"></i>
+                                    GitHub
+                                </a>
+                            </div>
+                            
+                            <div class="footer-meta">
+                                <div class="copyright">
+                                    &copy; @DateTime.Now.Year SAED - Todos os direitos reservados
+                                </div>
+                                <div class="version">
+                                    <i class="fas fa-code-branch" aria-hidden="true"></i>
+                                    Versão 1.0.0
+                                </div>
+                                <div class="tech-stack">
+                                    <span class="tech-item" title="ASP.NET Core 8.0">
+                                        <i class="fab fa-microsoft" aria-hidden="true"></i>
+                                        .NET 8.0
+                                    </span>
+                                    <span class="tech-item" title="MySQL Database">
+                                        <i class="fas fa-database" aria-hidden="true"></i>
+                                        MySQL
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Back to top button -->
+        <button class="back-to-top" id="backToTop" title="Voltar ao topo" aria-label="Voltar ao topo da página">
+            <i class="fas fa-chevron-up" aria-hidden="true"></i>
+        </button>
+    </footer>
+    <!-- JavaScript -->
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/layout.js" asp-append-version="true"></script>
+    
+    <!-- Page-specific scripts -->
+    @if (ViewContext.RouteData.Values["controller"]?.ToString() == "Home" && ViewContext.RouteData.Values["action"]?.ToString() == "Index")
+    {
+        <script src="~/js/home.js" asp-append-version="true"></script>
+    }
+    
+    <!-- Additional scripts section -->
+    @await RenderSectionAsync("Scripts", required: false)
+    
+    <!-- Performance monitoring (only in production) -->
+    @if (!Context.Request.Host.Host.Contains("localhost"))
+    {
+        <script>
+            // Basic performance monitoring
+            window.addEventListener('load', function() {
+                if ('performance' in window) {
+                    const perfData = performance.getEntriesByType('navigation')[0];
+                    console.log('Page load time:', perfData.loadEventEnd - perfData.fetchStart, 'ms');
+                }
+            });
+        </script>
+    }
+</body>
+</html>

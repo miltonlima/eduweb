@@ -1,0 +1,86 @@
+@model MvcSaed.Models.Turma
+@inject MvcSaed.Data.MvcSaedContext Db
+@{
+    ViewData["Title"] = "Editar Turma";
+    var selectedModalidadeId = Db.ModalidadeTurma
+        .Where(mt => mt.TurmaId == Model.Id)
+        .Select(mt => mt.ModalidadeId)
+        .FirstOrDefault(); // 0 if none
+}
+<h1>Editar Turma</h1>
+<hr />
+<div class="row">
+    <div class="col-md-6">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            
+            <div class="form-group mb-3">
+                <label class="form-label">ID da Turma</label>
+                <div class="form-control-plaintext">
+                    <span class="badge bg-secondary">@Model.Id</span>
+                </div>
+            </div>
+            
+            <div class="form-group mb-3">
+                <label asp-for="Nome" class="form-label"></label>
+                <input asp-for="Nome" class="form-control" />
+                <span asp-validation-for="Nome" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-3">
+                <label asp-for="DataInicio" class="form-label"></label>
+                <input asp-for="DataInicio" class="form-control" type="date" />
+                <span asp-validation-for="DataInicio" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-3">
+                <label asp-for="DataFim" class="form-label"></label>
+                <input asp-for="DataFim" class="form-control" type="date" />
+                <span asp-validation-for="DataFim" class="text-danger"></span>
+            </div>
+
+            <!-- Unidade select -->
+            <div class="form-group mb-3">
+                <label asp-for="UnidadeId" class="form-label">Unidade</label>
+                <select asp-for="UnidadeId" class="form-select" asp-items="ViewBag.UnidadeId">
+                    <option value="">-- Selecione uma unidade --</option>
+                </select>
+                <span asp-validation-for="UnidadeId" class="text-danger"></span>
+                <span class="text-muted small">Selecione a unidade onde a turma será realizada.</span>
+            </div>
+
+            <!-- Modalidade select -->
+            <div class="form-group mb-3">
+                <label for="SelectedModalidadeId" class="form-label">Modalidade</label>
+                <select id="SelectedModalidadeId" name="SelectedModalidadeId" class="form-control">
+                    <option value="">Sem modalidade</option>
+                    @foreach (var m in Db.Modalidade.OrderBy(x => x.Nome).ToList())
+                    {
+                        if (m.Id == selectedModalidadeId)
+                        {
+                            <option value="@m.Id" selected="selected">@m.Nome</option>
+                        }
+                        else
+                        {
+                            <option value="@m.Id">@m.Nome</option>
+                        }
+                    }
+                </select>
+                <span class="text-muted small">Cada turma pode estar vinculada a apenas uma modalidade.</span>
+                <span class="text-danger" data-valmsg-for="SelectedModalidadeId" data-valmsg-replace="true"></span>
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="Status" class="form-label"></label>
+                <select asp-for="Status" class="form-control" asp-items="Html.GetEnumSelectList<MvcSaed.Models.StatusTurma>()"></select>
+                <span asp-validation-for="Status" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Salvar" class="btn btn-primary" />
+                <a asp-action="Index" class="btn btn-secondary">Voltar à Lista</a>
+            </div>
+        </form>
+    </div>
+</div>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

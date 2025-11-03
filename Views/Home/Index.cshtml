@@ -1,0 +1,299 @@
+@{
+    ViewData["Title"] = "Bem-vindo ao SAED";
+}
+
+<!-- Hero Section -->
+<section class="hero-section">
+    <div class="container">
+        <div class="row align-items-center min-vh-75">
+            <div class="col-lg-6">
+                <div class="hero-content animate-fade-in">
+                    <div class="hero-badge mb-3">
+                        <span class="badge bg-primary-soft text-primary px-3 py-2 rounded-pill">
+                            <i class="fas fa-trophy me-2"></i>Sistema SAED
+                        </span>
+                    </div>
+                    <h1 class="hero-title display-4 fw-bold mb-4">
+                        Sistema de <span class="text-gradient">Atividades</span><br>
+                        Educacionais
+                    </h1>
+                    <p class="hero-subtitle fs-5 text-muted mb-4 lh-relaxed">
+                        Plataforma completa para gestão de estudantes, turmas, modalidades educacionais 
+                        e inscrições com interface moderna e validações avançadas.
+                    </p>
+                    <div class="hero-stats row g-3 mb-4">
+                        <div class="col-4">
+                            <div class="stat-item text-center">
+                                <div class="stat-number h4 fw-bold text-primary mb-1">6</div>
+                                <div class="stat-label small text-muted">Modalidades</div>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="stat-item text-center">
+                                <div class="stat-number h4 fw-bold text-success mb-1">4</div>
+                                <div class="stat-label small text-muted">Turmas Ativas</div>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="stat-item text-center">
+                                <div class="stat-number h4 fw-bold text-info mb-1">6</div>
+                                <div class="stat-label small text-muted">Estudantes</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="hero-visual animate-slide-up">
+                    <div class="floating-cards">
+                        <div class="card card-float-1 shadow-lg border-0">
+                            <div class="card-body text-center p-4">
+                                <div class="feature-icon-lg bg-primary-soft text-primary mb-3 mx-auto">
+                                    <i class="fas fa-users"></i>
+                                </div>
+                                <h6 class="fw-semibold">Gestão de Estudantes</h6>
+                                <p class="small text-muted mb-0">CRUD completo com validações</p>
+                            </div>
+                        </div>
+                        <div class="card card-float-2 shadow-lg border-0">
+                            <div class="card-body text-center p-4">
+                                <div class="feature-icon-lg bg-success-soft text-success mb-3 mx-auto">
+                                    <i class="fas fa-chalkboard-teacher"></i>
+                                </div>
+                                <h6 class="fw-semibold">Turmas & Modalidades</h6>
+                                <p class="small text-muted mb-0">Organize atividades educacionais</p>
+                            </div>
+                        </div>
+                        <div class="card card-float-3 shadow-lg border-0">
+                            <div class="card-body text-center p-4">
+                                <div class="feature-icon-lg bg-info-soft text-info mb-3 mx-auto">
+                                    <i class="fas fa-clipboard-list"></i>
+                                </div>
+                                <h6 class="fw-semibold">Sistema de Inscrições</h6>
+                                <p class="small text-muted mb-0">Matrículas com validação avançada</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Features Section -->
+<section class="features-section py-5 bg-light">
+    <div class="container">
+        <div class="row justify-content-center mb-5">
+            <div class="col-lg-8 text-center">
+                <h2 class="section-title h1 fw-bold mb-3">Funcionalidades Principais</h2>
+                <p class="section-subtitle text-muted fs-5">
+                    Tudo que você precisa para gerenciar sua instituição esportiva
+                </p>
+            </div>
+        </div>
+
+        <div class="row g-4">
+            <!-- Students Feature -->
+            <div class="col-lg-4 col-md-6">
+                <div class="feature-card h-100 animate-on-scroll">
+                    <div class="feature-card-header">
+                        <div class="feature-icon bg-primary-soft text-primary">
+                            <i class="fas fa-user-graduate"></i>
+                        </div>
+                        <h4 class="feature-title">Gestão de Estudantes</h4>
+                    </div>
+                    <div class="feature-card-body">
+                        <p class="text-muted mb-3">
+                            Sistema completo para cadastro e gerenciamento de estudantes com validações avançadas.
+                        </p>
+                        <ul class="feature-list">
+                            <li><i class="fas fa-check text-success me-2"></i>Validação de CPF em tempo real</li>
+                            <li><i class="fas fa-check text-success me-2"></i>Máscaras automáticas de entrada</li>
+                            <li><i class="fas fa-check text-success me-2"></i>CRUD completo e intuitivo</li>
+                        </ul>
+                    </div>
+                    <div class="feature-card-footer">
+                        <a href="@Url.Action("Index", "Pessoas")" class="btn btn-outline-primary btn-sm">
+                            Ver Estudantes <i class="fas fa-arrow-right ms-1"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Classes Feature -->
+            <div class="col-lg-4 col-md-6">
+                <div class="feature-card h-100 animate-on-scroll">
+                    <div class="feature-card-header">
+                        <div class="feature-icon bg-success-soft text-success">
+                            <i class="fas fa-chalkboard"></i>
+                        </div>
+                        <h4 class="feature-title">Turmas & Horários</h4>
+                    </div>
+                    <div class="feature-card-body">
+                        <p class="text-muted mb-3">
+                            Organize turmas com horários, descrições e controle de status de forma eficiente.
+                        </p>
+                        <ul class="feature-list">
+                            <li><i class="fas fa-check text-success me-2"></i>Controle de datas e períodos</li>
+                            <li><i class="fas fa-check text-success me-2"></i>Status ativo/inativo</li>
+                            <li><i class="fas fa-check text-success me-2"></i>Descrições detalhadas</li>
+                        </ul>
+                    </div>
+                    <div class="feature-card-footer">
+                        <a href="@Url.Action("Index", "Turmas")" class="btn btn-outline-success btn-sm">
+                            Ver Turmas <i class="fas fa-arrow-right ms-1"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modalities Feature -->
+            <div class="col-lg-4 col-md-6">
+                <div class="feature-card h-100 animate-on-scroll">
+                    <div class="feature-card-header">
+                        <div class="feature-icon bg-info-soft text-info">
+                            <i class="fas fa-futbol"></i>
+                        </div>
+                        <h4 class="feature-title">Modalidades Educacionais</h4>
+                    </div>
+                    <div class="feature-card-body">
+                        <p class="text-muted mb-3">
+                            Gerencie diferentes modalidades educacionais e suas respectivas turmas.
+                        </p>
+                        <ul class="feature-list">
+                            <li><i class="fas fa-check text-success me-2"></i>Educação Física, Artes, Música</li>
+                            <li><i class="fas fa-check text-success me-2"></i>Teatro, Dança, Literatura</li>
+                            <li><i class="fas fa-check text-success me-2"></i>Relacionamento com turmas</li>
+                        </ul>
+                    </div>
+                    <div class="feature-card-footer">
+                        <a href="@Url.Action("Index", "Modalidades")" class="btn btn-outline-info btn-sm">
+                            Ver Modalidades <i class="fas fa-arrow-right ms-1"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Enrollments Feature -->
+            <div class="col-lg-4 col-md-6">
+                <div class="feature-card h-100 animate-on-scroll">
+                    <div class="feature-card-header">
+                        <div class="feature-icon bg-warning-soft text-warning">
+                            <i class="fas fa-clipboard-check"></i>
+                        </div>
+                        <h4 class="feature-title">Sistema de Inscrições</h4>
+                    </div>
+                    <div class="feature-card-body">
+                        <p class="text-muted mb-3">
+                            Gerencie inscrições de estudantes em turmas com validação de duplicatas.
+                        </p>
+                        <ul class="feature-list">
+                            <li><i class="fas fa-check text-success me-2"></i>Prevenção de duplicatas</li>
+                            <li><i class="fas fa-check text-success me-2"></i>Validação em tempo real</li>
+                            <li><i class="fas fa-check text-success me-2"></i>Histórico de inscrições</li>
+                        </ul>
+                    </div>
+                    <div class="feature-card-footer">
+                        <a href="@Url.Action("Index", "Inscricoes")" class="btn btn-outline-warning btn-sm">
+                            Ver Inscrições <i class="fas fa-arrow-right ms-1"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Technology Feature -->
+            <div class="col-lg-4 col-md-6">
+                <div class="feature-card h-100 animate-on-scroll">
+                    <div class="feature-card-header">
+                        <div class="feature-icon bg-danger-soft text-danger">
+                            <i class="fas fa-code"></i>
+                        </div>
+                        <h4 class="feature-title">Tecnologia Moderna</h4>
+                    </div>
+                    <div class="feature-card-body">
+                        <p class="text-muted mb-3">
+                            Construído com as mais recentes tecnologias web para máxima performance.
+                        </p>
+                        <ul class="feature-list">
+                            <li><i class="fas fa-check text-success me-2"></i>ASP.NET Core 8.0 MVC</li>
+                            <li><i class="fas fa-check text-success me-2"></i>Entity Framework Core</li>
+                            <li><i class="fas fa-check text-success me-2"></i>Bootstrap 5 & MySQL</li>
+                        </ul>
+                    </div>
+                    <div class="feature-card-footer">
+                        <a href="#" class="btn btn-outline-danger btn-sm">
+                            Documentação <i class="fas fa-external-link-alt ms-1"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Analytics Feature -->
+            <div class="col-lg-4 col-md-6">
+                <div class="feature-card h-100 animate-on-scroll">
+                    <div class="feature-card-header">
+                        <div class="feature-icon bg-purple-soft text-purple">
+                            <i class="fas fa-chart-bar"></i>
+                        </div>
+                        <h4 class="feature-title">Relatórios & Analytics</h4>
+                    </div>
+                    <div class="feature-card-body">
+                        <p class="text-muted mb-3">
+                            Acompanhe métricas importantes e gere relatórios detalhados do sistema.
+                        </p>
+                        <ul class="feature-list">
+                            <li><i class="fas fa-check text-success me-2"></i>Dashboard intuitivo</li>
+                            <li><i class="fas fa-check text-success me-2"></i>Métricas em tempo real</li>
+                            <li><i class="fas fa-check text-success me-2"></i>Exportação de dados</li>
+                        </ul>
+                    </div>
+                    <div class="feature-card-footer">
+                        <span class="badge bg-secondary">Em Breve</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="cta-section py-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8 text-center">
+                <h2 class="cta-title h1 fw-bold mb-3">Comece a Usar Agora</h2>
+                <p class="cta-subtitle text-muted fs-5 mb-4">
+                    Explore todas as funcionalidades do sistema SAED e otimize a gestão da sua instituição.
+                </p>
+                <div class="cta-buttons d-flex flex-wrap justify-content-center gap-3">
+                    <a href="@Url.Action("Index", "Pessoas")" class="btn btn-primary btn-lg px-4">
+                        <i class="fas fa-users me-2"></i>Gerenciar Estudantes
+                    </a>
+                    <a href="@Url.Action("Index", "Turmas")" class="btn btn-outline-primary btn-lg px-4">
+                        <i class="fas fa-chalkboard me-2"></i>Ver Turmas
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Quote Section -->
+<section class="quote-section py-4 bg-light">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8 text-center">
+                <blockquote class="blockquote">
+                    <p class="mb-0 fst-italic text-muted">
+                        "A educação é o passaporte para o futuro, pois o amanhã pertence àqueles que se preparam hoje."
+                    </p>
+                    <footer class="blockquote-footer mt-2">
+                        <cite title="Malcolm X">Malcolm X</cite>
+                    </footer>
+                </blockquote>
+            </div>
+        </div>
+    </div>
+</section>
+
+

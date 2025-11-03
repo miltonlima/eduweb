@@ -1,0 +1,57 @@
+@model MvcSaed.Models.Modalidade
+@{
+    ViewData["Title"] = "Editar Modalidade";
+}
+<h1>Editar Modalidade</h1>
+<hr />
+<form asp-action="Edit">
+    <div asp-validation-summary="All" class="text-danger"></div>
+    <input type="hidden" asp-for="Id" />
+    
+    <div class="mb-3">
+        <label class="form-label">ID da Modalidade</label>
+        <div class="form-control-plaintext">
+            <span class="badge bg-primary">@Model.Id</span>
+        </div>
+    </div>
+    
+    <div class="mb-3">
+        <label asp-for="Nome" class="form-label"></label>
+        <input asp-for="Nome" class="form-control" />
+        <span asp-validation-for="Nome" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Turmas</label>
+        <button type="button" class="btn btn-sm btn-outline-primary mb-2" onclick="marcarTodosTurmas()">Marcar/Desmarcar todos</button>
+        <div>
+        @{
+            var turmas = (IEnumerable<MvcSaed.Models.Turma>)ViewBag.Turmas;
+            var selectedTurmas = ViewBag.SelectedTurmas as IEnumerable<int> ?? new List<int>();
+        }
+        @foreach (var turma in turmas)
+        {
+            <div class="form-check">
+                <input class="form-check-input turma-checkbox" type="checkbox" name="selectedTurmas" value="@turma.Id" id="turma_@turma.Id" @(selectedTurmas.Contains(turma.Id) ? "checked" : "") />
+                <label class="form-check-label" for="turma_@turma.Id">
+                    <span class="badge bg-secondary me-2">@turma.Id</span>@turma.Nome
+                </label>
+            </div>
+        }
+        </div>
+        <small class="form-text text-muted">Marque as turmas que deseja atribuir à modalidade</small>
+    </div>
+    <script>
+        function marcarTodosTurmas() {
+            const boxes = document.querySelectorAll('.turma-checkbox');
+            const allChecked = Array.from(boxes).every(cb => cb.checked);
+            boxes.forEach(cb => cb.checked = !allChecked);
+        }
+    </script>
+    <div>
+        <input type="submit" value="Salvar" class="btn btn-primary" />
+        <a asp-action="Index" class="btn btn-secondary">Voltar à Lista</a>
+    </div>
+</form>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -1,0 +1,100 @@
+@model IEnumerable<MvcSaed.Models.Turma>
+@inject MvcSaed.Data.MvcSaedContext Db
+@{
+    ViewData["Title"] = "Turmas";
+}
+<h1>Turmas</h1>
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <i class="fas fa-check-circle"></i> @TempData["SuccessMessage"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <i class="fas fa-exclamation-triangle"></i> @TempData["ErrorMessage"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">
+        <i class="fas fa-plus"></i> Cadastrar Nova Turma
+    </a>
+</p>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>@Html.DisplayNameFor(model => model.Nome)</th>
+            <th>@Html.DisplayNameFor(model => model.DataInicio)</th>
+            <th>@Html.DisplayNameFor(model => model.DataFim)</th>
+            <th>Unidade</th>
+            <th>Modalidade</th>
+            <th>@Html.DisplayNameFor(model => model.Status)</th>
+            <th>@Html.DisplayNameFor(model => model.DataCriacao)</th>
+            <th>Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td><span class="badge bg-secondary">@item.Id</span></td>
+            <td>@Html.DisplayFor(modelItem => item.Nome)</td>
+            <td>@Html.DisplayFor(modelItem => item.DataInicio)</td>
+            <td>@Html.DisplayFor(modelItem => item.DataFim)</td>
+            <td>
+                @if (item.Unidade != null)
+                {
+                    <span class="badge bg-success me-1">@item.Unidade.Id</span>
+                    <span>@item.Unidade.Nome</span>
+                }
+                else
+                {
+                    <span class="text-muted">-</span>
+                }
+            </td>
+            <td>
+                @if (!item.ModalidadesTurmas.Any())
+                {
+                    <span class="text-muted">-</span>
+                }
+                else
+                {
+                    @foreach (var mt in item.ModalidadesTurmas)
+                    {
+                        <span class="badge bg-primary me-1">@mt.Modalidade.Id</span>
+                        <span>@mt.Modalidade.Nome</span>
+                    }
+                }
+            </td>
+            <td>@Html.DisplayFor(modelItem => item.Status)</td>
+            <td>@Html.DisplayFor(modelItem => item.DataCriacao)</td>
+            <td>
+                <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-info btn-sm">
+                    <i class="fas fa-info-circle"></i> Detalhes
+                </a>
+                <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning btn-sm">
+                    <i class="fas fa-edit"></i> Editar
+                </a>
+                @if (!item.ModalidadesTurmas.Any())
+                {
+                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger btn-sm">
+                        <i class="fas fa-trash"></i> Excluir
+                    </a>
+                }
+                else
+                {
+                    <span class="btn btn-outline-secondary btn-sm disabled" title="Não é possível excluir: turma possui modalidades vinculadas">
+                        <i class="fas fa-ban"></i> Excluir
+                    </span>
+                }
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

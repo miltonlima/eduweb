@@ -1,0 +1,112 @@
+@model MvcSaed.Models.Pessoa
+
+@{
+    ViewData["Title"] = "Editar Pessoa";
+}
+
+<h1>Editar Pessoa</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-6">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group mb-3">
+                <label asp-for="Nome" class="form-label"></label>
+                <input asp-for="Nome" class="form-control" />
+                <span asp-validation-for="Nome" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-3">
+                <label asp-for="Nascimento" class="form-label"></label>
+                <input asp-for="Nascimento" class="form-control date-mask" type="text" maxlength="10" inputmode="numeric" autocomplete="off" placeholder="dd/mm/aaa" pattern="\d{2}/\d{2}/\d{4}" />
+                <span asp-validation-for="Nascimento" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-3">
+                <label asp-for="Cpf" class="form-label"></label>
+                <input asp-for="Cpf" class="form-control" placeholder="000.000.000-00" data-mask="cpf" maxlength="14" />
+                <span asp-validation-for="Cpf" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-3">
+                <label asp-for="Email" class="form-label"></label>
+                <input asp-for="Email" class="form-control" type="email" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-3">
+                <label asp-for="Matricula" class="form-label"></label>
+                <input asp-for="Matricula" class="form-control" maxlength="15" readonly />
+                <span asp-validation-for="Matricula" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Salvar" class="btn btn-primary" />
+                <a asp-action="Index" class="btn btn-secondary">Voltar à Lista</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+        (function () {
+            function formatDateMask(v) {
+                const digits = v.replace(/\D/g, "").slice(0, 8); // ddMMyyyy
+                let out = "";
+                if (digits.length > 0) out = digits.slice(0, 2);
+                if (digits.length >= 3) out += "/" + digits.slice(2, 4);
+                if (digits.length >= 5) out += "/" + digits.slice(4, 8);
+                return out;
+            }
+            function isValidDateBR(v) {
+                const m = /^(\d{2})\/(\d{2})\/(\d{4})$/.exec(v);
+                if (!m) return false;
+                const d = parseInt(m[1], 10), mo = parseInt(m[2], 10) - 1, y = parseInt(m[3], 10);
+                const dt = new Date(y, mo, d);
+                return dt.getFullYear() === y && dt.getMonth() === mo && dt.getDate() === d;
+            }
+
+            document.addEventListener("input", function (e) {
+                const el = e.target;
+                if (!(el.classList && el.classList.contains("date-mask"))) return;
+                const formatted = formatDateMask(el.value);
+                if (el.value !== formatted) el.value = formatted;
+            });
+
+            // Validate on change
+            document.addEventListener("change", function (e) {
+                const el = e.target;
+                if (!(el.classList && el.classList.contains("date-mask"))) return;
+                if (el.value.length === 0 || el.value.length < 10) { el.setCustomValidity(""); return; }
+                const valid = isValidDateBR(el.value);
+                el.setCustomValidity(valid ? "" : "Data inválida. Use o formato dd/mm/aaaa.");
+                if (!valid) el.reportValidity();
+            }, true);
+
+            // Clear incomplete value on blur
+            document.addEventListener("blur", function (e) {
+                const el = e.target;
+                if (!(el.classList && el.classList.contains("date-mask"))) return;
+                if (el.value.length > 0 && el.value.length < 10) el.value = "";
+            }, true);
+
+            // Block submit if invalid
+            document.addEventListener("submit", function (e) {
+                const form = e.target;
+                if (!(form instanceof HTMLFormElement)) return;
+                const dates = form.querySelectorAll(".date-mask");
+                for (const el of dates) {
+                    if (el.value.length === 0) { el.setCustomValidity(""); continue; }
+                    if (el.value.length !== 10 || !isValidDateBR(el.value)) {
+                        el.setCustomValidity("Data inválida. Use o formato dd/mm/aaaa.");
+                        el.reportValidity();
+                        e.preventDefault();
+                        return;
+                    } else {
+                        el.setCustomValidity("");
+                    }
+                }
+            }, true);
+        })();
+    </script>
+    <script src="~/js/cpf-mask.js" asp-append-version="true"></script>
+}

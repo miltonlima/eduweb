@@ -1,0 +1,106 @@
+@model MvcSaed.Models.Turma
+@{
+    ViewData["Title"] = "Excluir Turma";
+    var possuiModalidades = (bool)ViewBag.PossuiModalidades;
+    var quantidadeModalidades = (int)ViewBag.QuantidadeModalidades;
+}
+
+<h1>Excluir Turma</h1>
+
+@if (possuiModalidades)
+{
+    <div class="alert alert-danger">
+        <h4><i class="fas fa-exclamation-triangle"></i> Não é possível excluir esta turma</h4>
+        <p>Esta turma possui <strong>@quantidadeModalidades modalidade(s)</strong> vinculada(s). Para excluir a turma, primeiro você deve:</p>
+        <ol>
+            <li>Acessar a seção de Modalidades</li>
+            <li>Editar cada modalidade e desmarcar esta turma</li>
+            <li>Depois voltar aqui para excluir</li>
+        </ol>
+    </div>
+    
+    <h3>Modalidades vinculadas a esta turma:</h3>
+    <div class="card">
+        <div class="card-body">
+            <ul class="list-group list-group-flush">
+                @foreach (var mt in Model.ModalidadesTurmas)
+                {
+                    <li class="list-group-item d-flex align-items-center justify-content-between">
+                        <div>
+                            <span class="badge bg-primary me-2">@mt.Modalidade.Id</span>
+                            <strong>@mt.Modalidade.Nome</strong>
+                        </div>
+                        <a asp-controller="Modalidades" asp-action="Edit" asp-route-id="@mt.Modalidade.Id" class="btn btn-warning btn-sm">
+                            <i class="fas fa-edit"></i> Editar Modalidade
+                        </a>
+                    </li>
+                }
+            </ul>
+        </div>
+    </div>
+    
+    <div class="mt-4">
+        <a asp-controller="Modalidades" asp-action="Index" class="btn btn-primary">
+            <i class="fas fa-list"></i> Ir para Modalidades
+        </a>
+        <a asp-action="Index" class="btn btn-secondary">
+            <i class="fas fa-arrow-left"></i> Voltar à Lista
+        </a>
+    </div>
+}
+else
+{
+    <div class="alert alert-warning">
+        <h4><i class="fas fa-question-circle"></i> Confirmar Exclusão</h4>
+        <p>Tem certeza que deseja excluir esta turma? Esta ação não pode ser desfeita.</p>
+    </div>
+    
+    <div class="card">
+        <div class="card-header">
+            <h5 class="card-title mb-0">Detalhes da Turma</h5>
+        </div>
+        <div class="card-body">
+            <dl class="row">
+                <dt class="col-sm-3">ID</dt>
+                <dd class="col-sm-9"><span class="badge bg-secondary">@Model.Id</span></dd>
+                
+                <dt class="col-sm-3">@Html.DisplayNameFor(model => model.Nome)</dt>
+                <dd class="col-sm-9"><strong>@Html.DisplayFor(model => model.Nome)</strong></dd>
+                
+                <dt class="col-sm-3">@Html.DisplayNameFor(model => model.DataInicio)</dt>
+                <dd class="col-sm-9">@Html.DisplayFor(model => model.DataInicio)</dd>
+                
+                <dt class="col-sm-3">@Html.DisplayNameFor(model => model.DataFim)</dt>
+                <dd class="col-sm-9">@Html.DisplayFor(model => model.DataFim)</dd>
+                
+                <dt class="col-sm-3">@Html.DisplayNameFor(model => model.Status)</dt>
+                <dd class="col-sm-9">@Html.DisplayFor(model => model.Status)</dd>
+                
+                <dt class="col-sm-3">@Html.DisplayNameFor(model => model.DataCriacao)</dt>
+                <dd class="col-sm-9">@Html.DisplayFor(model => model.DataCriacao)</dd>
+                
+                <dt class="col-sm-3">Modalidades</dt>
+                <dd class="col-sm-9">
+                    <span class="badge bg-success">
+                        <i class="fas fa-check"></i> Nenhuma modalidade vinculada
+                    </span>
+                </dd>
+            </dl>
+        </div>
+    </div>
+    
+    <div class="mt-4">
+        <form asp-action="Delete" method="post" class="d-inline">
+            <input type="hidden" asp-for="Id" />
+            <button type="submit" class="btn btn-danger" onclick="return confirm('Tem certeza que deseja excluir esta turma?')">
+                <i class="fas fa-trash"></i> Confirmar Exclusão
+            </button>
+        </form>
+        <a asp-action="Details" asp-route-id="@Model.Id" class="btn btn-info">
+            <i class="fas fa-info-circle"></i> Ver Detalhes
+        </a>
+        <a asp-action="Index" class="btn btn-secondary">
+            <i class="fas fa-arrow-left"></i> Voltar à Lista
+        </a>
+    </div>
+}

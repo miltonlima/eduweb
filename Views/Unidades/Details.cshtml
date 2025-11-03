@@ -1,0 +1,38 @@
+@model MvcSaed.Models.Unidade
+@{
+    ViewData["Title"] = "Detalhes da Unidade";
+}
+<h1>Detalhes da Unidade</h1>
+<hr />
+<dl class="row">
+    <dt class="col-sm-3">ID</dt>
+    <dd class="col-sm-9"><span class="badge bg-primary">@Model.Id</span></dd>
+
+    <dt class="col-sm-3">Nome</dt>
+    <dd class="col-sm-9">@Model.Nome</dd>
+
+    <dt class="col-sm-3">Descrição</dt>
+    <dd class="col-sm-9">@Model.Descricao</dd>
+
+    <dt class="col-sm-3">Turma</dt>
+    <dd class="col-sm-9">
+        @if(Model.Turma != null)
+        {
+            <span class="badge bg-primary">@Model.Turma.Nome</span>
+        }
+        else
+        {
+            <span class="text-muted">Nenhuma turma associada</span>
+        }
+    </dd>
+
+    <dt class="col-sm-3">Endereço</dt>
+    <dd class="col-sm-9">@Model.Endereco</dd>
+
+    <dt class="col-sm-3">Ativa</dt>
+    <dd class="col-sm-9">@(Model.Ativa ? "Sim" : "Não")</dd>
+</dl>
+<p>
+    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning">Editar</a>
+    <a asp-action="Index" class="btn btn-secondary">Voltar à Lista</a>
+</p>

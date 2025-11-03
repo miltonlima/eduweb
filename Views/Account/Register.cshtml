@@ -1,0 +1,238 @@
+@model MvcSaed.Models.ViewModels.RegisterViewModel
+@{
+    ViewData["Title"] = "Registro";
+}
+
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+            <div class="card shadow-lg border-0">
+                <div class="card-header bg-gradient-success text-white text-center py-4">
+                    <div class="d-flex align-items-center justify-content-center mb-2">
+                        <i class="fas fa-trophy fa-2x text-warning me-3"></i>
+                        <div>
+                            <h3 class="mb-0">SAED</h3>
+                            <small class="opacity-75">Sistema de Atividades Educacionais</small>
+                        </div>
+                    </div>
+                    <h4 class="mb-0 mt-3">
+                        <i class="fas fa-user-plus me-2"></i>
+                        Criar Nova Conta
+                    </h4>
+                </div>
+                
+                <div class="card-body p-4">
+                    @if (!ViewData.ModelState.IsValid)
+                    {
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            <i class="fas fa-exclamation-triangle me-2"></i>
+                            <div asp-validation-summary="All" class="mb-0"></div>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    }
+
+                    <form asp-action="Register" method="post" class="needs-validation" novalidate>
+                        <input name="returnUrl" type="hidden" value="@ViewData["ReturnUrl"]" />
+                        
+                        <div class="row">
+                            <div class="col-md-12 mb-3">
+                                <label asp-for="Nome" class="form-label">
+                                    <i class="fas fa-user me-2 text-success"></i>
+                                    @Html.DisplayNameFor(m => m.Nome)
+                                </label>
+                                <input asp-for="Nome" class="form-control" 
+                                       placeholder="Digite seu nome completo" required />
+                                <span asp-validation-for="Nome" class="text-danger small"></span>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="Email" class="form-label">
+                                    <i class="fas fa-envelope me-2 text-success"></i>
+                                    @Html.DisplayNameFor(m => m.Email)
+                                </label>
+                                <input asp-for="Email" class="form-control" 
+                                       placeholder="Digite seu email" autocomplete="username" required />
+                                <span asp-validation-for="Email" class="text-danger small"></span>
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="PhoneNumber" class="form-label">
+                                    <i class="fas fa-phone me-2 text-success"></i>
+                                    @Html.DisplayNameFor(m => m.PhoneNumber)
+                                </label>
+                                <input asp-for="PhoneNumber" class="form-control" 
+                                       placeholder="(XX) XXXXX-XXXX" />
+                                <span asp-validation-for="PhoneNumber" class="text-danger small"></span>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Funcao" class="form-label">
+                                <i class="fas fa-briefcase me-2 text-success"></i>
+                                @Html.DisplayNameFor(m => m.Funcao)
+                            </label>
+                            <input asp-for="Funcao" class="form-control" 
+                                   placeholder="Ex: Professor, Coordenador, Administrador" />
+                            <span asp-validation-for="Funcao" class="text-danger small"></span>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="Password" class="form-label">
+                                    <i class="fas fa-lock me-2 text-success"></i>
+                                    @Html.DisplayNameFor(m => m.Password)
+                                </label>
+                                <div class="input-group">
+                                    <input asp-for="Password" class="form-control" 
+                                           placeholder="Digite sua senha" autocomplete="new-password" required />
+                                    <button class="btn btn-outline-secondary" type="button" onclick="togglePassword('Password')">
+                                        <i class="fas fa-eye" id="Password-eye"></i>
+                                    </button>
+                                </div>
+                                <span asp-validation-for="Password" class="text-danger small"></span>
+                                <div class="form-text">
+                                    <small>Mínimo 6 caracteres, pelo menos 1 número</small>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="ConfirmPassword" class="form-label">
+                                    <i class="fas fa-lock me-2 text-success"></i>
+                                    @Html.DisplayNameFor(m => m.ConfirmPassword)
+                                </label>
+                                <div class="input-group">
+                                    <input asp-for="ConfirmPassword" class="form-control" 
+                                           placeholder="Confirme sua senha" autocomplete="new-password" required />
+                                    <button class="btn btn-outline-secondary" type="button" onclick="togglePassword('ConfirmPassword')">
+                                        <i class="fas fa-eye" id="ConfirmPassword-eye"></i>
+                                    </button>
+                                </div>
+                                <span asp-validation-for="ConfirmPassword" class="text-danger small"></span>
+                            </div>
+                        </div>
+
+                        <div class="alert alert-info" role="alert">
+                            <i class="fas fa-info-circle me-2"></i>
+                            <strong>Política de Privacidade:</strong> Seus dados são utilizados apenas para o funcionamento do sistema e não são compartilhados com terceiros.
+                        </div>
+
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-success btn-lg">
+                                <i class="fas fa-user-plus me-2"></i>
+                                Criar Conta
+                            </button>
+                        </div>
+                    </form>
+
+                    <hr class="my-4">
+
+                    <div class="text-center">
+                        <p class="mb-2">
+                            <i class="fas fa-sign-in-alt me-2 text-primary"></i>
+                            Já tem uma conta?
+                        </p>
+                        <a asp-action="Login" asp-route-returnUrl="@ViewData["ReturnUrl"]" 
+                           class="btn btn-outline-primary">
+                            <i class="fas fa-sign-in-alt me-2"></i>
+                            Fazer Login
+                        </a>
+                    </div>
+                </div>
+
+                <div class="card-footer text-center bg-light py-3">
+                    <small class="text-muted">
+                        <i class="fas fa-shield-alt me-1"></i>
+                        Ao criar uma conta, você concorda com nossos termos de uso
+                    </small>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    
+    <script>
+        function togglePassword(fieldId) {
+            const field = document.getElementById(fieldId);
+            const eye = document.getElementById(fieldId + '-eye');
+            
+            if (field.type === 'password') {
+                field.type = 'text';
+                eye.classList.remove('fa-eye');
+                eye.classList.add('fa-eye-slash');
+            } else {
+                field.type = 'password';
+                eye.classList.remove('fa-eye-slash');
+                eye.classList.add('fa-eye');
+            }
+        }
+
+        // Phone number formatting
+        document.getElementById('PhoneNumber').addEventListener('input', function (e) {
+            let value = e.target.value.replace(/\D/g, '');
+            if (value.length >= 11) {
+                value = value.replace(/(\d{2})(\d{5})(\d{4})/, '($1) $2-$3');
+            } else if (value.length >= 7) {
+                value = value.replace(/(\d{2})(\d{4})(\d{0,4})/, '($1) $2-$3');
+            } else if (value.length >= 3) {
+                value = value.replace(/(\d{2})(\d{0,5})/, '($1) $2');
+            }
+            e.target.value = value;
+        });
+
+        // Bootstrap form validation
+        (function() {
+            'use strict';
+            window.addEventListener('load', function() {
+                var forms = document.getElementsByClassName('needs-validation');
+                var validation = Array.prototype.filter.call(forms, function(form) {
+                    form.addEventListener('submit', function(event) {
+                        if (form.checkValidity() === false) {
+                            event.preventDefault();
+                            event.stopPropagation();
+                        }
+                        form.classList.add('was-validated');
+                    }, false);
+                });
+            }, false);
+        })();
+    </script>
+}
+
+<style>
+    .bg-gradient-success {
+        background: linear-gradient(135deg, #198754 0%, #146c43 100%);
+    }
+    
+    .card {
+        border-radius: 15px;
+        overflow: hidden;
+    }
+    
+    .form-control:focus {
+        border-color: #198754;
+        box-shadow: 0 0 0 0.2rem rgba(25, 135, 84, 0.25);
+    }
+    
+    .btn-success {
+        background: linear-gradient(135deg, #198754 0%, #146c43 100%);
+        border: none;
+    }
+    
+    .btn-success:hover {
+        background: linear-gradient(135deg, #146c43 0%, #0f5132 100%);
+        transform: translateY(-1px);
+    }
+    
+    .form-control {
+        border-radius: 8px;
+    }
+    
+    .input-group .btn {
+        border-radius: 0 8px 8px 0;
+    }
+</style>

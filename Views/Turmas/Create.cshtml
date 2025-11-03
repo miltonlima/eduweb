@@ -1,0 +1,137 @@
+@model MvcSaed.Models.Turma
+@inject MvcSaed.Data.MvcSaedContext Db
+@{
+    ViewData["Title"] = "Cadastrar Turma";
+}
+<h1>Cadastrar Nova Turma</h1>
+<hr />
+<div class="row">
+    <div class="col-md-6">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group mb-3">
+                <label asp-for="Nome" class="form-label"></label>
+                <input asp-for="Nome" class="form-control" />
+                <span asp-validation-for="Nome" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-3">
+                <label asp-for="DataInicio" class="form-label"></label>
+                <input asp-for="DataInicio" class="form-control date-mask" type="text" maxlength="10" inputmode="numeric" autocomplete="off" value="" placeholder="dd/mm/aaa" pattern="\d{2}/\d{2}/\d{4}" />
+                <span asp-validation-for="DataInicio" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-3">
+                <label asp-for="DataFim" class="form-label"></label>
+                <input asp-for="DataFim" class="form-control date-mask" type="text" maxlength="10" inputmode="numeric" autocomplete="off" value="" placeholder="dd/mm/aaa" pattern="\d{2}/\d{2}/\d{4}" />
+                <span asp-validation-for="DataFim" class="text-danger"></span>
+            </div>
+
+            <!-- Unidade select -->
+            <div class="form-group mb-3">
+                <label asp-for="UnidadeId" class="form-label">Unidade</label>
+                <select asp-for="UnidadeId" class="form-select" asp-items="ViewBag.UnidadeId">
+                    <option value="">-- Selecione uma unidade --</option>
+                </select>
+                <span asp-validation-for="UnidadeId" class="text-danger"></span>
+                <span class="text-muted small">Selecione a unidade onde a turma será realizada.</span>
+            </div>
+
+            <!-- Modalidade select -->
+            <div class="form-group mb-3">
+                <label for="SelectedModalidadeId" class="form-label">Modalidade</label>
+                <select id="SelectedModalidadeId" name="SelectedModalidadeId" class="form-select">
+                    <option value="">Selecione...</option>
+                    @foreach (var m in Db.Modalidade.OrderBy(x => x.Nome).ToList())
+                    {
+                        <option value="@m.Id">@m.Nome</option>
+                    }
+                </select>
+                <span class="text-muted small">Cada turma pode estar vinculada a apenas uma modalidade.</span>
+                <span class="text-danger" data-valmsg-for="SelectedModalidadeId" data-valmsg-replace="true"></span>
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="Status" class="form-label"></label>
+                <select asp-for="Status" class="form-control" asp-items="Html.GetEnumSelectList<MvcSaed.Models.StatusTurma>()"></select>
+                <span asp-validation-for="Status" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Cadastrar" class="btn btn-primary" />
+                <a asp-action="Index" class="btn btn-secondary">Voltar à Lista</a>
+            </div>
+        </form>
+    </div>
+</div>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+        (function () {
+            function formatDateMask(v) {
+                const digits = v.replace(/\D/g, "").slice(0, 8); // ddMMyyyy
+                let out = "";
+                if (digits.length > 0) out = digits.slice(0, 2);
+                if (digits.length >= 3) out += "/" + digits.slice(2, 4);
+                if (digits.length >= 5) out += "/" + digits.slice(4, 8);
+                return out;
+            }
+            function isValidDateBR(v) {
+                const m = /^(\d{2})\/(\d{2})\/(\d{4})$/.exec(v);
+                if (!m) return false;
+                const d = parseInt(m[1], 10), mo = parseInt(m[2], 10) - 1, y = parseInt(m[3], 10);
+                const dt = new Date(y, mo, d);
+                return dt.getFullYear() === y && dt.getMonth() === mo && dt.getDate() === d;
+            }
+
+            // Ensure fields start empty so only placeholder is shown
+            document.addEventListener("DOMContentLoaded", function () {
+                document.querySelectorAll(".date-mask").forEach(function (el) {
+                    el.value = "";
+                    el.setCustomValidity("");
+                });
+            });
+
+            document.addEventListener("input", function (e) {
+                const el = e.target;
+                if (!(el.classList && el.classList.contains("date-mask"))) return;
+                const formatted = formatDateMask(el.value);
+                if (el.value !== formatted) el.value = formatted;
+                // validate on change only
+            });
+
+            // validate on change
+            document.addEventListener("change", function (e) {
+                const el = e.target;
+                if (!(el.classList && el.classList.contains("date-mask"))) return;
+                if (el.value.length === 0) { el.setCustomValidity(""); return; }
+                if (el.value.length < 10) { el.setCustomValidity(""); return; } // blur will clear
+                const valid = isValidDateBR(el.value);
+                el.setCustomValidity(valid ? "" : "Data inválida. Use o formato dd/mm/aaaa.");
+                if (!valid) el.reportValidity();
+            }, true);
+
+            // Clear incomplete value on blur so placeholder shows
+            document.addEventListener("blur", function (e) {
+                const el = e.target;
+                if (!(el.classList && el.classList.contains("date-mask"))) return;
+                if (el.value.length > 0 && el.value.length < 10) el.value = "";
+            }, true);
+
+            // Prevent submit if any filled date is invalid
+            document.addEventListener("submit", function (e) {
+                const form = e.target;
+                if (!(form instanceof HTMLFormElement)) return;
+                const dates = form.querySelectorAll(".date-mask");
+                for (const el of dates) {
+                    if (el.value.length === 0) { el.setCustomValidity(""); continue; }
+                    if (el.value.length !== 10 || !isValidDateBR(el.value)) {
+                        el.setCustomValidity("Data inválida. Use o formato dd/mm/aaaa.");
+                        el.reportValidity();
+                        e.preventDefault();
+                        return;
+                    } else {
+                        el.setCustomValidity("");
+                    }
+                }
+            }, true);
+        })();
+    </script>
+}
