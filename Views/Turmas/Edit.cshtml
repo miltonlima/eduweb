@@ -2,9 +2,9 @@
 @inject MvcSaed.Data.MvcSaedContext Db
 @{
     ViewData["Title"] = "Editar Turma";
-    var selectedModalidadeId = Db.ModalidadeTurma
+    var selectedCursoId = Db.CursoTurma
         .Where(mt => mt.TurmaId == Model.Id)
-        .Select(mt => mt.ModalidadeId)
+        .Select(mt => mt.CursoId)
         .FirstOrDefault(); // 0 if none
 }
 <h1>Editar Turma</h1>
@@ -48,14 +48,14 @@
                 <span class="text-muted small">Selecione a unidade onde a turma será realizada.</span>
             </div>
 
-            <!-- Modalidade select -->
+            <!-- Curso select -->
             <div class="form-group mb-3">
-                <label for="SelectedModalidadeId" class="form-label">Modalidade</label>
-                <select id="SelectedModalidadeId" name="SelectedModalidadeId" class="form-control">
-                    <option value="">Sem modalidade</option>
-                    @foreach (var m in Db.Modalidade.OrderBy(x => x.Nome).ToList())
+                <label for="SelectedCursoId" class="form-label">Curso</label>
+                <select id="SelectedCursoId" name="SelectedCursoId" class="form-control">
+                    <option value="">Sem curso</option>
+                    @foreach (var m in Db.Curso.OrderBy(x => x.Nome).ToList())
                     {
-                        if (m.Id == selectedModalidadeId)
+                        if (m.Id == selectedCursoId)
                         {
                             <option value="@m.Id" selected="selected">@m.Nome</option>
                         }
@@ -65,8 +65,8 @@
                         }
                     }
                 </select>
-                <span class="text-muted small">Cada turma pode estar vinculada a apenas uma modalidade.</span>
-                <span class="text-danger" data-valmsg-for="SelectedModalidadeId" data-valmsg-replace="true"></span>
+                <span class="text-muted small">Cada turma pode estar vinculada a apenas um curso.</span>
+                <span class="text-danger" data-valmsg-for="SelectedCursoId" data-valmsg-replace="true"></span>
             </div>
 
             <div class="form-group mb-3">

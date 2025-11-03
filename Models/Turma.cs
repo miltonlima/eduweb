@@ -38,7 +38,7 @@ namespace MvcSaed.Models
         [Display(Name = "Unidade")]
         public virtual Unidade? Unidade { get; set; }
 
-        public ICollection<ModalidadeTurma> ModalidadesTurmas { get; set; } = new List<ModalidadeTurma>();
+        public ICollection<CursoTurma> CursosTurmas { get; set; } = new List<CursoTurma>();
 
         public ICollection<InscricaoTurma> Inscricoes { get; set; } = new List<InscricaoTurma>();
 

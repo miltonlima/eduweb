@@ -1,22 +1,20 @@
-@model MvcSaed.Models.Modalidade
+@model MvcSaed.Models.Curso
 @{
-    ViewData["Title"] = "Cadastrar Modalidade";
+    ViewData["Title"] = "Editar Curso";
 }
-<h1>Cadastrar Modalidade</h1>
+<h1>Editar Curso</h1>
 <hr />
-
-<div class="mb-3">
-    <strong>Turmas disponíveis para atribuição:</strong>
-    <ul>
-    @foreach (var turma in (IEnumerable<MvcSaed.Models.Turma>)ViewBag.Turmas)
-    {
-        <li><span class="badge bg-secondary me-2">ID: @turma.Id</span>@turma.Nome</li>
-    }
-    </ul>
-</div>
-
-<form asp-action="Create">
+<form asp-action="Edit">
     <div asp-validation-summary="All" class="text-danger"></div>
+    <input type="hidden" asp-for="Id" />
+    
+    <div class="mb-3">
+        <label class="form-label">ID do Curso</label>
+        <div class="form-control-plaintext">
+            <span class="badge bg-primary">@Model.Id</span>
+        </div>
+    </div>
+    
     <div class="mb-3">
         <label asp-for="Nome" class="form-label"></label>
         <input asp-for="Nome" class="form-control" />
@@ -27,19 +25,20 @@
         <button type="button" class="btn btn-sm btn-outline-primary mb-2" onclick="marcarTodosTurmas()">Marcar/Desmarcar todos</button>
         <div>
         @{
-            var turmas = ViewBag.Turmas as IEnumerable<MvcSaed.Models.Turma> ?? new List<MvcSaed.Models.Turma>();
+            var turmas = (IEnumerable<MvcSaed.Models.Turma>)ViewBag.Turmas;
+            var selectedTurmas = ViewBag.SelectedTurmas as IEnumerable<int> ?? new List<int>();
         }
         @foreach (var turma in turmas)
         {
             <div class="form-check">
-                <input class="form-check-input turma-checkbox" type="checkbox" name="selectedTurmas" value="@turma.Id" id="turma_@turma.Id" />
+                <input class="form-check-input turma-checkbox" type="checkbox" name="selectedTurmas" value="@turma.Id" id="turma_@turma.Id" @(selectedTurmas.Contains(turma.Id) ? "checked" : "") />
                 <label class="form-check-label" for="turma_@turma.Id">
                     <span class="badge bg-secondary me-2">@turma.Id</span>@turma.Nome
                 </label>
             </div>
         }
         </div>
-        <small class="form-text text-muted">Marque as turmas que deseja atribuir à modalidade</small>
+        <small class="form-text text-muted">Marque as turmas que deseja atribuir ao curso</small>
     </div>
     <script>
         function marcarTodosTurmas() {
@@ -49,7 +48,7 @@
         }
     </script>
     <div>
-        <input type="submit" value="Cadastrar" class="btn btn-primary" />
+        <input type="submit" value="Salvar" class="btn btn-primary" />
         <a asp-action="Index" class="btn btn-secondary">Voltar à Lista</a>
     </div>
 </form>

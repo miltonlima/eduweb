@@ -34,7 +34,7 @@
             <th>@Html.DisplayNameFor(model => model.DataInicio)</th>
             <th>@Html.DisplayNameFor(model => model.DataFim)</th>
             <th>Unidade</th>
-            <th>Modalidade</th>
+            <th>Curso</th>
             <th>@Html.DisplayNameFor(model => model.Status)</th>
             <th>@Html.DisplayNameFor(model => model.DataCriacao)</th>
             <th>Ações</th>
@@ -59,16 +59,16 @@
                 }
             </td>
             <td>
-                @if (!item.ModalidadesTurmas.Any())
+                @if (!item.CursosTurmas.Any())
                 {
                     <span class="text-muted">-</span>
                 }
                 else
                 {
-                    @foreach (var mt in item.ModalidadesTurmas)
+                    @foreach (var mt in item.CursosTurmas)
                     {
-                        <span class="badge bg-primary me-1">@mt.Modalidade.Id</span>
-                        <span>@mt.Modalidade.Nome</span>
+                        <span class="badge bg-primary me-1">@mt.Curso.Id</span>
+                        <span>@mt.Curso.Nome</span>
                     }
                 }
             </td>
@@ -81,7 +81,7 @@
                 <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning btn-sm">
                     <i class="fas fa-edit"></i> Editar
                 </a>
-                @if (!item.ModalidadesTurmas.Any())
+                @if (!item.CursosTurmas.Any())
                 {
                     <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger btn-sm">
                         <i class="fas fa-trash"></i> Excluir
@@ -89,7 +89,7 @@
                 }
                 else
                 {
-                    <span class="btn btn-outline-secondary btn-sm disabled" title="Não é possível excluir: turma possui modalidades vinculadas">
+                    <span class="btn btn-outline-secondary btn-sm disabled" title="Não é possível excluir: turma possui cursos vinculados">
                         <i class="fas fa-ban"></i> Excluir
                     </span>
                 }

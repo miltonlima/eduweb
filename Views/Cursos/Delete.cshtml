@@ -1,29 +1,29 @@
-@model MvcSaed.Models.Modalidade
+@model MvcSaed.Models.Curso
 @{
-    ViewData["Title"] = "Excluir Modalidade";
+    ViewData["Title"] = "Excluir Curso";
     var possuiTurmas = (bool)ViewBag.PossuiTurmas;
     var quantidadeTurmas = (int)ViewBag.QuantidadeTurmas;
 }
 
-<h1>Excluir Modalidade</h1>
+<h1>Excluir Curso</h1>
 
 @if (possuiTurmas)
 {
     <div class="alert alert-danger">
-        <h4><i class="fas fa-exclamation-triangle"></i> Não é possível excluir esta modalidade</h4>
-        <p>Esta modalidade possui <strong>@quantidadeTurmas turma(s)</strong> vinculada(s). Para excluir a modalidade, primeiro você deve:</p>
+        <h4><i class="fas fa-exclamation-triangle"></i> Não é possível excluir este curso</h4>
+        <p>Este curso possui <strong>@quantidadeTurmas turma(s)</strong> vinculada(s). Para excluir o curso, primeiro você deve:</p>
         <ol>
-            <li>Editar a modalidade e desmarcar todas as turmas</li>
-            <li>Ou transferir as turmas para outra modalidade</li>
+            <li>Editar o curso e desmarcar todas as turmas</li>
+            <li>Ou transferir as turmas para outro curso</li>
             <li>Depois voltar aqui para excluir</li>
         </ol>
     </div>
     
-    <h3>Turmas vinculadas a esta modalidade:</h3>
+    <h3>Turmas vinculadas a este curso:</h3>
     <div class="card">
         <div class="card-body">
             <ul class="list-group list-group-flush">
-                @foreach (var mt in Model.ModalidadesTurmas)
+                @foreach (var mt in Model.CursosTurmas)
                 {
                     <li class="list-group-item d-flex align-items-center">
                         <span class="badge bg-secondary me-2">@mt.Turma.Id</span>
@@ -51,12 +51,12 @@ else
 {
     <div class="alert alert-warning">
         <h4><i class="fas fa-question-circle"></i> Confirmar Exclusão</h4>
-        <p>Tem certeza que deseja excluir esta modalidade? Esta ação não pode ser desfeita.</p>
+        <p>Tem certeza que deseja excluir este curso? Esta ação não pode ser desfeita.</p>
     </div>
     
     <div class="card">
         <div class="card-header">
-            <h5 class="card-title mb-0">Detalhes da Modalidade</h5>
+            <h5 class="card-title mb-0">Detalhes do Curso</h5>
         </div>
         <div class="card-body">
             <dl class="row">
@@ -79,7 +79,7 @@ else
     <div class="mt-4">
         <form asp-action="Delete" method="post" class="d-inline">
             <input type="hidden" asp-for="Id" />
-            <button type="submit" class="btn btn-danger" onclick="return confirm('Tem certeza que deseja excluir esta modalidade?')">
+            <button type="submit" class="btn btn-danger" onclick="return confirm('Tem certeza que deseja excluir este curso?')">
                 <i class="fas fa-trash"></i> Confirmar Exclusão
             </button>
         </form>

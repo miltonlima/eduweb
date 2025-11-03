@@ -3,15 +3,15 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MvcSaed.Models
 {
-    public class Modalidade
+    public class Curso
     {
         public int Id { get; set; }
 
-        [Required(ErrorMessage = "O nome da modalidade é obrigatório")]
+        [Required(ErrorMessage = "O nome do curso é obrigatório")]
         [StringLength(100)]
-        [Display(Name = "Nome da Modalidade")]
+        [Display(Name = "Nome do Curso")]
         public string Nome { get; set; } = string.Empty;
 
-        public ICollection<ModalidadeTurma> ModalidadesTurmas { get; set; } = new List<ModalidadeTurma>();
+        public ICollection<CursoTurma> CursosTurmas { get; set; } = new List<CursoTurma>();
     }
 }

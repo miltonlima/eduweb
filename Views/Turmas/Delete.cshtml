@@ -1,37 +1,37 @@
 @model MvcSaed.Models.Turma
 @{
     ViewData["Title"] = "Excluir Turma";
-    var possuiModalidades = (bool)ViewBag.PossuiModalidades;
-    var quantidadeModalidades = (int)ViewBag.QuantidadeModalidades;
+    var possuiCursos = (bool)ViewBag.PossuiCursos;
+    var quantidadeCursos = (int)ViewBag.QuantidadeCursos;
 }
 
 <h1>Excluir Turma</h1>
 
-@if (possuiModalidades)
+@if (possuiCursos)
 {
     <div class="alert alert-danger">
         <h4><i class="fas fa-exclamation-triangle"></i> Não é possível excluir esta turma</h4>
-        <p>Esta turma possui <strong>@quantidadeModalidades modalidade(s)</strong> vinculada(s). Para excluir a turma, primeiro você deve:</p>
+        <p>Esta turma possui <strong>@quantidadeCursos curso(s)</strong> vinculado(s). Para excluir a turma, primeiro você deve:</p>
         <ol>
-            <li>Acessar a seção de Modalidades</li>
-            <li>Editar cada modalidade e desmarcar esta turma</li>
+            <li>Acessar a seção de Cursos</li>
+            <li>Editar cada curso e desmarcar esta turma</li>
             <li>Depois voltar aqui para excluir</li>
         </ol>
     </div>
     
-    <h3>Modalidades vinculadas a esta turma:</h3>
+    <h3>Cursos vinculados a esta turma:</h3>
     <div class="card">
         <div class="card-body">
             <ul class="list-group list-group-flush">
-                @foreach (var mt in Model.ModalidadesTurmas)
+                @foreach (var mt in Model.CursosTurmas)
                 {
                     <li class="list-group-item d-flex align-items-center justify-content-between">
                         <div>
-                            <span class="badge bg-primary me-2">@mt.Modalidade.Id</span>
-                            <strong>@mt.Modalidade.Nome</strong>
+                            <span class="badge bg-primary me-2">@mt.Curso.Id</span>
+                            <strong>@mt.Curso.Nome</strong>
                         </div>
-                        <a asp-controller="Modalidades" asp-action="Edit" asp-route-id="@mt.Modalidade.Id" class="btn btn-warning btn-sm">
-                            <i class="fas fa-edit"></i> Editar Modalidade
+                        <a asp-controller="Cursos" asp-action="Edit" asp-route-id="@mt.Curso.Id" class="btn btn-warning btn-sm">
+                            <i class="fas fa-edit"></i> Editar Curso
                         </a>
                     </li>
                 }
@@ -40,8 +40,8 @@
     </div>
     
     <div class="mt-4">
-        <a asp-controller="Modalidades" asp-action="Index" class="btn btn-primary">
-            <i class="fas fa-list"></i> Ir para Modalidades
+        <a asp-controller="Cursos" asp-action="Index" class="btn btn-primary">
+            <i class="fas fa-list"></i> Ir para Cursos
         </a>
         <a asp-action="Index" class="btn btn-secondary">
             <i class="fas fa-arrow-left"></i> Voltar à Lista
@@ -79,10 +79,10 @@ else
                 <dt class="col-sm-3">@Html.DisplayNameFor(model => model.DataCriacao)</dt>
                 <dd class="col-sm-9">@Html.DisplayFor(model => model.DataCriacao)</dd>
                 
-                <dt class="col-sm-3">Modalidades</dt>
+                <dt class="col-sm-3">Cursos</dt>
                 <dd class="col-sm-9">
                     <span class="badge bg-success">
-                        <i class="fas fa-check"></i> Nenhuma modalidade vinculada
+                        <i class="fas fa-check"></i> Nenhum curso vinculado
                     </span>
                 </dd>
             </dl>

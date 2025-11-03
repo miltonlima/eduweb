@@ -18,8 +18,8 @@ namespace MvcSaed.Data
     public DbSet<MvcSaed.Models.Movie> Movie { get; set; } = default!;
     public DbSet<Pessoa> Pessoa { get; set; }
     public DbSet<Turma> Turma { get; set; }
-    public DbSet<MvcSaed.Models.Modalidade> Modalidade { get; set; } = default!;
-    public DbSet<MvcSaed.Models.ModalidadeTurma> ModalidadeTurma { get; set; } = default!;
+    public DbSet<MvcSaed.Models.Curso> Curso { get; set; } = default!;
+    public DbSet<MvcSaed.Models.CursoTurma> CursoTurma { get; set; } = default!;
     public DbSet<InscricaoTurma> InscricaoTurma { get; set; }
     // Unidades
     public DbSet<MvcSaed.Models.Unidade> Unidade { get; set; }
@@ -38,18 +38,18 @@ namespace MvcSaed.Data
             .ValueGeneratedOnAdd()
             .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
-        // Configura��o do relacionamento many-to-many entre Modalidade e Turma
-        modelBuilder.Entity<MvcSaed.Models.ModalidadeTurma>(entity =>
+        // Configuração do relacionamento many-to-many entre Curso e Turma
+        modelBuilder.Entity<MvcSaed.Models.CursoTurma>(entity =>
         {
-            entity.ToTable("modalidade_turma");
-            entity.HasKey(mt => new { mt.ModalidadeId, mt.TurmaId });
+            entity.ToTable("curso_turma");
+            entity.HasKey(mt => new { mt.CursoId, mt.TurmaId });
 
-            entity.HasOne(mt => mt.Modalidade)
-                .WithMany(m => m.ModalidadesTurmas)
-                .HasForeignKey(mt => mt.ModalidadeId);
+            entity.HasOne(mt => mt.Curso)
+                .WithMany(m => m.CursosTurmas)
+                .HasForeignKey(mt => mt.CursoId);
 
             entity.HasOne(mt => mt.Turma)
-                .WithMany(t => t.ModalidadesTurmas)
+                .WithMany(t => t.CursosTurmas)
                 .HasForeignKey(mt => mt.TurmaId);
         });
 

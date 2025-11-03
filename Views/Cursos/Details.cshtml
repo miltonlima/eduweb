@@ -1,6 +1,6 @@
-@model MvcSaed.Models.Modalidade
+@model MvcSaed.Models.Curso
 @{
-    ViewData["Title"] = "Detalhes da Modalidade";
+    ViewData["Title"] = "Detalhes do Curso";
 }
 <h1>Detalhes</h1>
 <dl class="row">
@@ -10,14 +10,14 @@
     <dd class="col-sm-9">@Model.Nome</dd>
     <dt class="col-sm-3">Turmas</dt>
     <dd class="col-sm-9">
-        @if (!Model.ModalidadesTurmas.Any())
+        @if (!Model.CursosTurmas.Any())
         {
             <span>(Nenhuma)</span>
         }
         else
         {
             <ul class="list-unstyled">
-                @foreach (var mt in Model.ModalidadesTurmas)
+                @foreach (var mt in Model.CursosTurmas)
                 {
                     <li><span class="badge bg-secondary me-2">@mt.Turma.Id</span>@mt.Turma.Nome</li>
                 }

@@ -24,8 +24,8 @@ namespace MvcSaed.Controllers
         {
             var turmas = await _context.Turma
                 .Include(t => t.Unidade)
-                .Include(t => t.ModalidadesTurmas)
-                    .ThenInclude(mt => mt.Modalidade)
+                .Include(t => t.CursosTurmas)
+                    .ThenInclude(mt => mt.Curso)
                 .ToListAsync();
             return View(turmas);
         }
@@ -63,7 +63,7 @@ namespace MvcSaed.Controllers
         // POST: Turmas/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Nome,DataInicio,DataFim,Status,UnidadeId")] Turma turma, int? SelectedModalidadeId)
+        public async Task<IActionResult> Create([Bind("Id,Nome,DataInicio,DataFim,Status,UnidadeId")] Turma turma, int? SelectedCursoId)
         {
             if (ModelState.IsValid)
             {
@@ -71,19 +71,19 @@ namespace MvcSaed.Controllers
                 _context.Add(turma);
                 await _context.SaveChangesAsync();
 
-                // Vincula a modalidade selecionada (uma por turma)
-                if (SelectedModalidadeId.HasValue && SelectedModalidadeId.Value > 0)
+                // Vincula o curso selecionado (um por turma)
+                if (SelectedCursoId.HasValue && SelectedCursoId.Value > 0)
                 {
-                    var modalidadeExists = await _context.Modalidade.AnyAsync(m => m.Id == SelectedModalidadeId.Value);
-                    if (!modalidadeExists)
+                    var cursoExists = await _context.Curso.AnyAsync(m => m.Id == SelectedCursoId.Value);
+                    if (!cursoExists)
                     {
-                        ModelState.AddModelError("SelectedModalidadeId", "Modalidade inválida.");
+                        ModelState.AddModelError("SelectedCursoId", "Curso inválido.");
                         return View(turma);
                     }
 
-                    _context.ModalidadeTurma.Add(new ModalidadeTurma
+                    _context.CursoTurma.Add(new CursoTurma
                     {
-                        ModalidadeId = SelectedModalidadeId.Value,
+                        CursoId = SelectedCursoId.Value,
                         TurmaId = turma.Id
                     });
                     await _context.SaveChangesAsync();
@@ -118,7 +118,7 @@ namespace MvcSaed.Controllers
         // POST: Turmas/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Nome,DataInicio,DataFim,Status,DataCriacao,UnidadeId")] Turma turma, int? SelectedModalidadeId)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Nome,DataInicio,DataFim,Status,DataCriacao,UnidadeId")] Turma turma, int? SelectedCursoId)
         {
             if (id != turma.Id)
                 return NotFound();
@@ -129,40 +129,40 @@ namespace MvcSaed.Controllers
                 {
                     _context.Update(turma);
 
-                    // Atualiza o vínculo da modalidade (garante no máximo uma modalidade por turma)
-                    var currentLinks = await _context.ModalidadeTurma
+                    // Atualiza o vínculo do curso (garante no máximo um curso por turma)
+                    var currentLinks = await _context.CursoTurma
                         .Where(mt => mt.TurmaId == turma.Id)
                         .ToListAsync();
 
-                    if (SelectedModalidadeId.HasValue && SelectedModalidadeId.Value > 0)
+                    if (SelectedCursoId.HasValue && SelectedCursoId.Value > 0)
                     {
-                        var modalidadeExists = await _context.Modalidade.AnyAsync(m => m.Id == SelectedModalidadeId.Value);
-                        if (!modalidadeExists)
+                        var cursoExists = await _context.Curso.AnyAsync(m => m.Id == SelectedCursoId.Value);
+                        if (!cursoExists)
                         {
-                            ModelState.AddModelError("SelectedModalidadeId", "Modalidade inválida.");
+                            ModelState.AddModelError("SelectedCursoId", "Curso inválido.");
                             return View(turma);
                         }
 
                         // Se já existir o mesmo vínculo, apenas remove os demais; senão recria
-                        if (!currentLinks.Any(l => l.ModalidadeId == SelectedModalidadeId.Value))
+                        if (!currentLinks.Any(l => l.CursoId == SelectedCursoId.Value))
                         {
-                            _context.ModalidadeTurma.RemoveRange(currentLinks);
-                            _context.ModalidadeTurma.Add(new ModalidadeTurma
+                            _context.CursoTurma.RemoveRange(currentLinks);
+                            _context.CursoTurma.Add(new CursoTurma
                             {
-                                ModalidadeId = SelectedModalidadeId.Value,
+                                CursoId = SelectedCursoId.Value,
                                 TurmaId = turma.Id
                             });
                         }
                         else
                         {
-                            _context.ModalidadeTurma.RemoveRange(currentLinks.Where(l => l.ModalidadeId != SelectedModalidadeId.Value));
+                            _context.CursoTurma.RemoveRange(currentLinks.Where(l => l.CursoId != SelectedCursoId.Value));
                         }
                     }
                     else
                     {
-                        // Sem modalidade selecionada: remove vínculos existentes
+                        // Sem curso selecionado: remove vínculos existentes
                         if (currentLinks.Any())
-                            _context.ModalidadeTurma.RemoveRange(currentLinks);
+                            _context.CursoTurma.RemoveRange(currentLinks);
                     }
 
                     await _context.SaveChangesAsync();
@@ -190,15 +190,15 @@ namespace MvcSaed.Controllers
             if (id == null) return NotFound();
             
             var turma = await _context.Turma
-                .Include(t => t.ModalidadesTurmas)
-                    .ThenInclude(mt => mt.Modalidade)
+                .Include(t => t.CursosTurmas)
+                    .ThenInclude(mt => mt.Curso)
                 .FirstOrDefaultAsync(m => m.Id == id);
                 
             if (turma == null) return NotFound();
             
-            // Verifica se a turma possui modalidades vinculadas
-            ViewBag.PossuiModalidades = turma.ModalidadesTurmas.Any();
-            ViewBag.QuantidadeModalidades = turma.ModalidadesTurmas.Count;
+            // Verifica se a turma possui cursos vinculados
+            ViewBag.PossuiCursos = turma.CursosTurmas.Any();
+            ViewBag.QuantidadeCursos = turma.CursosTurmas.Count;
             
             return View(turma);
         }
@@ -212,15 +212,15 @@ namespace MvcSaed.Controllers
             try
             {
                 var turma = await _context.Turma
-                    .Include(t => t.ModalidadesTurmas)
+                    .Include(t => t.CursosTurmas)
                     .FirstOrDefaultAsync(t => t.Id == id);
                     
                 if (turma == null) return NotFound();
                 
-                // Verifica se ainda possui modalidades vinculadas
-                if (turma.ModalidadesTurmas.Any())
+                // Verifica se ainda possui cursos vinculados
+                if (turma.CursosTurmas.Any())
                 {
-                    TempData["ErrorMessage"] = "Não é possível excluir esta turma pois ela possui modalidades vinculadas. Primeiro desvincule todas as modalidades.";
+                    TempData["ErrorMessage"] = "Não é possível excluir esta turma pois ela possui cursos vinculados. Primeiro desvincule todos os cursos.";
                     return RedirectToAction(nameof(Index));
                 }
                 
