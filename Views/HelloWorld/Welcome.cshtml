@@ -15,11 +15,11 @@
                         <div class="col-md-6">
                             <div class="welcome-section">
                                 <h4 class="text-info">????? Para Professores</h4>
-                                <p class="lead">Gerencie suas turmas, modalidades e acompanhe o desenvolvimento dos seus alunos de forma simples e eficiente.</p>
+                                <p class="lead">Gerencie suas turmas, cursos e acompanhe o desenvolvimento dos seus alunos de forma simples e eficiente.</p>
                                 <ul class="list-unstyled">
-                                    <li>? Controle de turmas e modalidades</li>
+                                    <li>? Controle de turmas e cursos</li>
                                     <li>? Gerenciamento de estudantes</li>
-                                    <li>? Relatórios de progresso</li>
+                                    <li>? Relatï¿½rios de progresso</li>
                                 </ul>
                             </div>
                         </div>
@@ -27,11 +27,11 @@
                         <div class="col-md-6">
                             <div class="welcome-section">
                                 <h4 class="text-warning">????? Para Estudantes</h4>
-                                <p class="lead">Acesse suas informações acadêmicas, veja suas turmas e modalidades matriculadas.</p>
+                                <p class="lead">Acesse suas informaï¿½ï¿½es acadï¿½micas, veja suas turmas e cursos matriculados.</p>
                                 <ul class="list-unstyled">
-                                    <li>? Consulta de matrículas</li>
-                                    <li>? Informações das turmas</li>
-                                    <li>? Modalidades disponíveis</li>
+                                    <li>? Consulta de matrï¿½culas</li>
+                                    <li>? Informaï¿½ï¿½es das turmas</li>
+                                    <li>? Cursos disponï¿½veis</li>
                                 </ul>
                             </div>
                         </div>
@@ -40,7 +40,7 @@
                     @if (ViewData["Message"] != null)
                     {
                         <div class="alert alert-success mt-4" role="alert">
-                            <h5>?? Olá!</h5>
+                            <h5>?? Olï¿½!</h5>
                             @for (int i = 0; i < (int)ViewData["NumTimes"]!; i++)
                             {
                                 <p class="mb-1">@ViewData["Message"]</p>
@@ -50,13 +50,13 @@
                     
                     <div class="mt-4">
                         <p class="text-muted">
-                            <em>"A educação é a arma mais poderosa que você pode usar para mudar o mundo." - Nelson Mandela</em>
+                            <em>"A educaï¿½ï¿½o ï¿½ a arma mais poderosa que vocï¿½ pode usar para mudar o mundo." - Nelson Mandela</em>
                         </p>
                     </div>
                     
                     <div class="mt-4">
                         <a href="@Url.Action("Index", "Home")" class="btn btn-primary btn-lg me-3">
-                            <i class="fas fa-home"></i> Ir para o Início
+                            <i class="fas fa-home"></i> Ir para o Inï¿½cio
                         </a>
                         <a href="@Url.Action("Index", "Pessoas")" class="btn btn-outline-secondary btn-lg">
                             <i class="fas fa-users"></i> Ver Pessoas

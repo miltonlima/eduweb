@@ -3,8 +3,8 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="SAED - Sistema de Atividades Educacionais. Gerencie estudantes, turmas, modalidades e atividades educacionais de forma eficiente." />
-    <meta name="keywords" content="sistema educacional, atividades educacionais, estudantes, turmas, modalidades, educação" />
+    <meta name="description" content="SAED - Sistema de Atividades Educacionais. Gerencie estudantes, turmas, cursos e atividades educacionais de forma eficiente." />
+    <meta name="keywords" content="sistema educacional, atividades educacionais, estudantes, turmas, cursos, educação" />
     <meta name="author" content="SAED System" />
     
     <title>@ViewData["Title"] - SAED | Sistema de Atividades Educacionais</title>
@@ -100,11 +100,11 @@
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link @(ViewContext.RouteData.Values["controller"]?.ToString() == "Modalidades" ? "active" : "")" 
-                               asp-area="" asp-controller="Modalidades" asp-action="Index"
-                               title="Gerenciar modalidades educacionais">
-                                <i class="fas fa-futbol nav-icon" aria-hidden="true"></i>
-                                <span class="nav-text">Modalidades</span>
+                            <a class="nav-link @(ViewContext.RouteData.Values["controller"]?.ToString() == "Cursos" ? "active" : "")" 
+                               asp-area="" asp-controller="Cursos" asp-action="Index"
+                               title="Gerenciar cursos educacionais">
+                                <i class="fas fa-book nav-icon" aria-hidden="true"></i>
+                                <span class="nav-text">Cursos</span>
                             </a>
                         </li>
                         
