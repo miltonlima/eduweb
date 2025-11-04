@@ -3,11 +3,11 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="SAED - Sistema de Atividades Educacionais. Gerencie estudantes, turmas, cursos e atividades educacionais de forma eficiente." />
+    <meta name="description" content="EduWeb - Sistema de Gestão Educacional. Gerencie estudantes, turmas, cursos e atividades educacionais de forma eficiente." />
     <meta name="keywords" content="sistema educacional, atividades educacionais, estudantes, turmas, cursos, educação" />
-    <meta name="author" content="SAED System" />
+    <meta name="author" content="EduWeb System" />
     
-    <title>@ViewData["Title"] - SAED | Sistema de Atividades Educacionais</title>
+    <title>@ViewData["Title"] - EduWeb | Sistema de Gestão Educacional</title>
     
     <!-- Preload critical resources -->
     <link rel="preload" href="~/lib/bootstrap/dist/css/bootstrap.min.css" as="style" />
@@ -36,12 +36,12 @@
         <nav class="navbar navbar-expand-lg navbar-dark bg-gradient-primary shadow-sm" role="navigation" aria-label="Navegação principal">
             <div class="container-fluid">
                 <!-- Brand -->
-                <a class="navbar-brand saed-brand" asp-area="" asp-controller="Home" asp-action="Index" title="SAED - Página Inicial">
+                <a class="navbar-brand saed-brand" asp-area="" asp-controller="Home" asp-action="Index" title="EduWeb - Página Inicial">
                     <div class="brand-content">
-                        <i class="fas fa-trophy brand-icon" aria-hidden="true"></i>
+                        <i class="fas fa-graduation-cap brand-icon" aria-hidden="true"></i>
                         <div class="brand-text">
-                            <span class="brand-name">SAED</span>
-                            <small class="brand-subtitle d-none d-md-block">Sistema de Atividades Educacionais</small>
+                            <span class="brand-name">EduWeb</span>
+                            <small class="brand-subtitle d-none d-md-block">Sistema de Gestão Educacional</small>
                         </div>
                     </div>
                 </a>
@@ -62,32 +62,6 @@
                                 <i class="fas fa-home nav-icon" aria-hidden="true"></i>
                                 <span class="nav-text">Início</span>
                             </a>
-                        </li>
-                        
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle @(ViewContext.RouteData.Values["controller"]?.ToString() == "Pessoas" ? "active" : "")" 
-                               href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"
-                               title="Gerenciar estudantes">
-                                <i class="fas fa-users nav-icon" aria-hidden="true"></i>
-                                <span class="nav-text">Estudantes</span>
-                            </a>
-                            <ul class="dropdown-menu dropdown-menu-modern">
-                                <li>
-                                    <a class="dropdown-item" asp-controller="Pessoas" asp-action="Index"
-                                       title="Ver lista de todos os estudantes">
-                                        <i class="fas fa-list dropdown-icon" aria-hidden="true"></i>
-                                        <span>Ver Todos</span>
-                                    </a>
-                                </li>
-                                <li><hr class="dropdown-divider"></li>
-                                <li>
-                                    <a class="dropdown-item" asp-controller="Pessoas" asp-action="Create"
-                                       title="Cadastrar novo estudante">
-                                        <i class="fas fa-plus dropdown-icon text-success" aria-hidden="true"></i>
-                                        <span>Cadastrar Novo</span>
-                                    </a>
-                                </li>
-                            </ul>
                         </li>
 
                         <li class="nav-item">
@@ -115,6 +89,32 @@
                                 <i class="fas fa-chalkboard nav-icon" aria-hidden="true"></i>
                                 <span class="nav-text">Turmas</span>
                             </a>
+                        </li>
+                        
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle @(ViewContext.RouteData.Values["controller"]?.ToString() == "Pessoas" ? "active" : "")" 
+                               href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"
+                               title="Gerenciar estudantes">
+                                <i class="fas fa-users nav-icon" aria-hidden="true"></i>
+                                <span class="nav-text">Estudantes</span>
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-modern">
+                                <li>
+                                    <a class="dropdown-item" asp-controller="Pessoas" asp-action="Index"
+                                       title="Ver lista de todos os estudantes">
+                                        <i class="fas fa-list dropdown-icon" aria-hidden="true"></i>
+                                        <span>Ver Todos</span>
+                                    </a>
+                                </li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li>
+                                    <a class="dropdown-item" asp-controller="Pessoas" asp-action="Create"
+                                       title="Cadastrar novo estudante">
+                                        <i class="fas fa-plus dropdown-icon text-success" aria-hidden="true"></i>
+                                        <span>Cadastrar Novo</span>
+                                    </a>
+                                </li>
+                            </ul>
                         </li>
                         
                         <li class="nav-item dropdown">
@@ -262,10 +262,10 @@
                     <div class="col-md-6">
                         <div class="footer-brand">
                             <div class="d-flex align-items-center mb-2">
-                                <i class="fas fa-trophy footer-icon" aria-hidden="true"></i>
+                                <i class="fas fa-graduation-cap footer-icon" aria-hidden="true"></i>
                                 <div class="footer-text">
-                                    <strong class="footer-title">SAED</strong>
-                                    <div class="footer-subtitle">Sistema de Atividades Educacionais</div>
+                                    <strong class="footer-title">EduWeb</strong>
+                                    <div class="footer-subtitle">Sistema de Gestão Educacional</div>
                                 </div>
                             </div>
                             <p class="footer-description">
@@ -292,7 +292,7 @@
                             
                             <div class="footer-meta">
                                 <div class="copyright">
-                                    &copy; @DateTime.Now.Year SAED - Todos os direitos reservados
+                                    &copy; @DateTime.Now.Year EduWeb - Todos os direitos reservados
                                 </div>
                                 <div class="version">
                                     <i class="fas fa-code-branch" aria-hidden="true"></i>

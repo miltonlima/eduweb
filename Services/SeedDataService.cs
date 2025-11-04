@@ -20,6 +20,7 @@ namespace MvcSaed.Services
 
             await CreateRoles(roleManager);
             await CreateAdminUser(userManager);
+            await CreateStudentUser(userManager);
         }
 
         /// <summary>
@@ -27,7 +28,7 @@ namespace MvcSaed.Services
         /// </summary>
         private static async Task CreateRoles(RoleManager<IdentityRole> roleManager)
         {
-            string[] roleNames = { "Administrador", "Professor", "Coordenador", "Usuario" };
+            string[] roleNames = { "Administrador", "Professor", "Coordenador", "Usuario", "Aluno" };
 
             foreach (var roleName in roleNames)
             {
@@ -43,7 +44,7 @@ namespace MvcSaed.Services
         /// </summary>
         private static async Task CreateAdminUser(UserManager<ApplicationUser> userManager)
         {
-            var adminEmail = "admin@saed.com";
+            var adminEmail = "admin@eduweb.com";
             var adminUser = await userManager.FindByEmailAsync(adminEmail);
 
             if (adminUser == null)
@@ -64,11 +65,52 @@ namespace MvcSaed.Services
                 if (result.Succeeded)
                 {
                     await userManager.AddToRoleAsync(adminUser, "Administrador");
+                    await userManager.AddToRoleAsync(adminUser, "Professor");
                     Console.WriteLine($"Usuário administrador criado: {adminEmail} / Admin@123");
                 }
                 else
                 {
                     Console.WriteLine("Erro ao criar usuário administrador:");
+                    foreach (var error in result.Errors)
+                    {
+                        Console.WriteLine($"- {error.Description}");
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Criar usuário aluno de demonstração
+        /// </summary>
+        private static async Task CreateStudentUser(UserManager<ApplicationUser> userManager)
+        {
+            var studentEmail = "aluno@eduweb.com";
+            var studentUser = await userManager.FindByEmailAsync(studentEmail);
+
+            if (studentUser == null)
+            {
+                studentUser = new ApplicationUser
+                {
+                    UserName = studentEmail,
+                    Email = studentEmail,
+                    Nome = "Estudante Demonstração",
+                    Funcao = "Aluno",
+                    Ativo = true,
+                    DataCriacao = DateTime.Now,
+                    EmailConfirmed = true
+                };
+
+                var result = await userManager.CreateAsync(studentUser, "Aluno@123");
+
+                if (result.Succeeded)
+                {
+                    await userManager.AddToRoleAsync(studentUser, "Aluno");
+                    await userManager.AddToRoleAsync(studentUser, "Usuario");
+                    Console.WriteLine($"Usuário aluno criado: {studentEmail} / Aluno@123");
+                }
+                else
+                {
+                    Console.WriteLine("Erro ao criar usuário aluno:");
                     foreach (var error in result.Errors)
                     {
                         Console.WriteLine($"- {error.Description}");
