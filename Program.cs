@@ -8,7 +8,13 @@ var builder = WebApplication.CreateBuilder(args);
 
 var connectionString = builder.Configuration.GetConnectionString("MvcSaedContext") ?? throw new InvalidOperationException("Connection string 'MvcSaedContext' not found.");
 builder.Services.AddDbContext<MvcSaedContext>(options =>
-    options.UseMySql(connectionString, new MySqlServerVersion(new Version(8, 0, 25))));
+    options.UseMySql(connectionString, new MySqlServerVersion(new Version(8, 0, 25)),
+        mySqlOptions => mySqlOptions.EnableRetryOnFailure(
+            maxRetryCount: 5,
+            maxRetryDelay: TimeSpan.FromSeconds(10),
+            errorNumbersToAdd: null
+        )
+    ));
 
 // Configurar Identity
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
