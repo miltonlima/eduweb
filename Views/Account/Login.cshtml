@@ -77,42 +77,6 @@
 
                     <hr class="my-4">
 
-                    <!-- Quick Access Section -->
-                    <div class="quick-access-section">
-                        <h6 class="text-center text-muted mb-3">
-                            <i class="fas fa-bolt me-2"></i>
-                            Acesso Rápido (Demonstração)
-                        </h6>
-                        <div class="row g-2">
-                            <div class="col-md-6">
-                                <button type="button" class="btn btn-outline-success w-100 quick-login-btn" 
-                                        onclick="quickLogin('aluno@eduweb.com', 'Aluno@123')">
-                                    <div class="d-flex flex-column align-items-center py-2">
-                                        <i class="fas fa-user-graduate fa-2x mb-2"></i>
-                                        <strong>Aluno</strong>
-                                        <small class="text-muted">aluno@eduweb.com</small>
-                                    </div>
-                                </button>
-                            </div>
-                            <div class="col-md-6">
-                                <button type="button" class="btn btn-outline-primary w-100 quick-login-btn" 
-                                        onclick="quickLogin('admin@eduweb.com', 'Admin@123')">
-                                    <div class="d-flex flex-column align-items-center py-2">
-                                        <i class="fas fa-user-shield fa-2x mb-2"></i>
-                                        <strong>Professor/Admin</strong>
-                                        <small class="text-muted">admin@eduweb.com</small>
-                                    </div>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="alert alert-info mt-3 mb-0" role="alert">
-                            <i class="fas fa-info-circle me-2"></i>
-                            <small>Clique em um dos botões acima para preencher automaticamente os campos de login</small>
-                        </div>
-                    </div>
-
-                    <hr class="my-4">
-
                     <div class="text-center">
                         <p class="mb-2">
                             <i class="fas fa-user-plus me-2 text-success"></i>
@@ -141,35 +105,6 @@
     <partial name="_ValidationScriptsPartial" />
     
     <script>
-        function quickLogin(email, password) {
-            document.getElementById('Email').value = email;
-            document.getElementById('Password').value = password;
-            
-            // Focus on submit button
-            document.querySelector('button[type="submit"]').focus();
-            
-            // Optional: Show a toast notification
-            showQuickLoginNotification(email);
-        }
-
-        function showQuickLoginNotification(email) {
-            // Create a simple toast notification
-            const toast = document.createElement('div');
-            toast.className = 'alert alert-success position-fixed top-0 end-0 m-3 fade show';
-            toast.style.zIndex = '9999';
-            toast.innerHTML = `
-                <i class="fas fa-check-circle me-2"></i>
-                <strong>Credenciais preenchidas!</strong><br>
-                <small>Email: ${email}</small>
-            `;
-            document.body.appendChild(toast);
-            
-            setTimeout(() => {
-                toast.classList.remove('show');
-                setTimeout(() => toast.remove(), 300);
-            }, 2000);
-        }
-
         function togglePassword(fieldId) {
             const field = document.getElementById(fieldId);
             const eye = document.getElementById(fieldId + '-eye');
@@ -235,30 +170,5 @@
     
     .input-group .btn {
         border-radius: 0 8px 8px 0;
-    }
-
-    .quick-login-btn {
-        border-radius: 10px;
-        transition: all 0.3s ease;
-        border-width: 2px;
-    }
-    
-    .quick-login-btn:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-    }
-
-    .quick-login-btn i {
-        transition: transform 0.3s ease;
-    }
-
-    .quick-login-btn:hover i {
-        transform: scale(1.1);
-    }
-
-    .quick-access-section {
-        background-color: #f8f9fa;
-        padding: 1.5rem;
-        border-radius: 10px;
     }
 </style>
