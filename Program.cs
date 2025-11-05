@@ -19,9 +19,9 @@ builder.Services.AddDbContext<MvcSaedContext>(options =>
 // Configurar Identity
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
 {
-    // Configurações de senha
-    options.Password.RequireDigit = true;
-    options.Password.RequireLowercase = true;
+    // Configurações de senha - Permitir senhas fracas
+    options.Password.RequireDigit = false;
+    options.Password.RequireLowercase = false;
     options.Password.RequireNonAlphanumeric = false;
     options.Password.RequireUppercase = false;
     options.Password.RequiredLength = 6;
@@ -88,6 +88,6 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Pessoas}/{action=Index}/{id?}");
+    pattern: "{controller=Home}/{action=Index}/{id?}");
 
 app.Run();
