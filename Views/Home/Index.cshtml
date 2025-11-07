@@ -805,6 +805,94 @@
         color: #667eea;
     }
     
+    /* Dark Theme Adjustments */
+    body {
+        background-color: #121212;
+        color: #e0e0e0;
+    }
+
+    .hero-modern {
+        background: linear-gradient(135deg, #1e1e1e 0%, #333333 100%);
+        color: #ffffff;
+    }
+
+    .badge-modern {
+        background: rgba(255, 255, 255, 0.1);
+        color: #ffffff;
+    }
+
+    .btn-primary-modern {
+        background: #bb86fc;
+        color: #121212;
+    }
+
+    .btn-primary-modern:hover {
+        background: #9a67ea;
+        color: #ffffff;
+    }
+
+    .btn-outline-modern {
+        border-color: #bb86fc;
+        color: #bb86fc;
+    }
+
+    .btn-outline-modern:hover {
+        background: #bb86fc;
+        color: #121212;
+    }
+
+    .stats-row {
+        background: rgba(255, 255, 255, 0.05);
+    }
+
+    .stat-item-modern {
+        background: rgba(255, 255, 255, 0.1);
+        color: #ffffff;
+    }
+
+    .feature-card-modern {
+        background: #1e1e1e;
+        border-color: #333333;
+        color: #e0e0e0;
+    }
+
+    .feature-card-modern:hover {
+        border-color: #bb86fc;
+    }
+
+    .cta-modern {
+        background: linear-gradient(135deg, #333333 0%, #1e1e1e 100%);
+        color: #ffffff;
+    }
+
+    .btn-white-modern {
+        background: #bb86fc;
+        color: #121212;
+    }
+
+    .btn-white-modern:hover {
+        background: #9a67ea;
+        color: #ffffff;
+    }
+
+    .tech-section {
+        background: #121212;
+        color: #e0e0e0;
+    }
+
+    .tech-icon-modern {
+        background: linear-gradient(135deg, #bb86fc 0%, #9a67ea 100%);
+    }
+
+    .quote-section {
+        background: #1e1e1e;
+        color: #e0e0e0;
+    }
+
+    blockquote {
+        border-left: 4px solid #bb86fc;
+    }
+    
     /* Responsive */
     @@media (max-width: 991px) {
         .hero-title-modern {
@@ -856,74 +944,56 @@
         }
     }
 </style>
+<!-- Hero Section -->
+<section class="hero-modern min-vh-80 d-flex align-items-center">
     <div class="container">
-        <div class="row align-items-center min-vh-75">
-            <div class="col-lg-6">
-                <div class="hero-content animate-fade-in">
-                    <div class="hero-badge mb-3">
-                        <span class="badge bg-primary-soft text-primary px-3 py-2 rounded-pill">
-                            <i class="fas fa-graduation-cap me-2"></i>Sistema EduWeb
-                        </span>
-                    </div>
-                    <h1 class="hero-title display-4 fw-bold mb-4">
-                        Sistema de <span class="text-gradient">Gestão</span><br>
-                        Educacional
-                    </h1>
-                    <p class="hero-subtitle fs-5 text-muted mb-4 lh-relaxed">
-                        Plataforma completa para gestão de estudantes, turmas, cursos educacionais 
-                        e inscrições com interface moderna e validações avançadas.
-                    </p>
-                    <div class="hero-stats row g-3 mb-4">
-                        <div class="col-4">
-                            <div class="stat-item text-center">
-                                <div class="stat-number h4 fw-bold text-primary mb-1">6</div>
-                                <div class="stat-label small text-muted">Cursos</div>
-                            </div>
-                        </div>
-                        <div class="col-4">
-                            <div class="stat-item text-center">
-                                <div class="stat-number h4 fw-bold text-success mb-1">4</div>
-                                <div class="stat-label small text-muted">Turmas Ativas</div>
-                            </div>
-                        </div>
-                        <div class="col-4">
-                            <div class="stat-item text-center">
-                                <div class="stat-number h4 fw-bold text-info mb-1">6</div>
-                                <div class="stat-label small text-muted">Estudantes</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+        <div class="row align-items-center">
+            <div class="col-lg-6 mb-5 mb-lg-0">
+                <span class="badge-modern mb-3">
+                    <i class="fas fa-star me-2"></i>Bem-vindo ao EduWeb
+                </span>
+                <h1 class="hero-title-modern mt-3 mb-4">
+                    Plataforma Completa para Gestão Educacional <span class="text-gradient-modern">Moderna</span>
+                </h1>
+                <p class="hero-description-modern mb-4">
+                    Simplifique a administração da sua instituição esportiva com ferramentas intuitivas e poderosas.
+                </p>
+                <a href="@Url.Action("Index", "Pessoas")" class="btn btn-primary-modern me-3">
+                    <i class="fas fa-rocket me-2"></i>
+                    Começar Agora
+                </a>
+                <a href="#features" class="btn btn-outline-modern">
+                    Ver Funcionalidades <i class="fas fa-arrow-right ms-1"></i>
+                </a>
             </div>
             <div class="col-lg-6">
-                <div class="hero-visual animate-slide-up">
-                    <div class="floating-cards">
-                        <div class="card card-float-1 shadow-lg border-0">
-                            <div class="card-body text-center p-4">
-                                <div class="feature-icon-lg bg-primary-soft text-primary mb-3 mx-auto">
-                                    <i class="fas fa-users"></i>
-                                </div>
-                                <h6 class="fw-semibold">Gestão de Estudantes</h6>
-                                <p class="small text-muted mb-0">Cadastro e controle completo</p>
-                            </div>
+                <div class="hero-image-modern">
+                    <!-- Floating Cards -->
+                    <div class="floating-card-modern card-1">
+                        <div class="card-icon-modern bg-gradient-primary">
+                            <i class="fas fa-user-graduate"></i>
                         </div>
-                        <div class="card card-float-2 shadow-lg border-0">
-                            <div class="card-body text-center p-4">
-                                <div class="feature-icon-lg bg-success-soft text-success mb-3 mx-auto">
-                                    <i class="fas fa-chalkboard-teacher"></i>
-                                </div>
-                                <h6 class="fw-semibold">Turmas & Cursos</h6>
-                                <p class="small text-muted mb-0">Organize atividades educacionais</p>
-                            </div>
+                        <div class="card-content-modern">
+                            <h5>Gestão de Estudantes</h5>
+                            <p>Cadastro completo com validação de CPF</p>
                         </div>
-                        <div class="card card-float-3 shadow-lg border-0">
-                            <div class="card-body text-center p-4">
-                                <div class="feature-icon-lg bg-info-soft text-info mb-3 mx-auto">
-                                    <i class="fas fa-clipboard-list"></i>
-                                </div>
-                                <h6 class="fw-semibold">Sistema de Inscrições</h6>
-                                <p class="small text-muted mb-0">Matrículas com validação avançada</p>
-                            </div>
+                    </div>
+                    <div class="floating-card-modern card-2">
+                        <div class="card-icon-modern bg-gradient-success">
+                            <i class="fas fa-chalkboard-teacher"></i>
+                        </div>
+                        <div class="card-content-modern">
+                            <h5>Turmas & Horários</h5>
+                            <p>Organize turmas e períodos facilmente</p>
+                        </div>
+                    </div>
+                    <div class="floating-card-modern card-3">
+                        <div class="card-icon-modern bg-gradient-info">
+                            <i class="fas fa-book-reader"></i>
+                        </div>
+                        <div class="card-content-modern">
+                            <h5>Cursos Educacionais</h5>
+                            <p>Gerencie diversos cursos e modalidades</p>
                         </div>
                     </div>
                 </div>
