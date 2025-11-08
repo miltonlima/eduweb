@@ -1,9 +1,10 @@
-using System.Threading.Tasks;
+using System;
 using System.Linq;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using MvcSaed.Data;
 using MvcSaed.Models;
 
@@ -19,24 +20,71 @@ namespace MvcSaed.Controllers
             _context = context;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string sortOrder)
         {
-            var unidades = await _context.Unidade
-                .Include(u => u.Turma)
-                .OrderBy(u => u.Nome)
-                .ToListAsync();
-            return View(unidades);
+            ViewData["CurrentSort"] = sortOrder;
+            ViewData["IdSortParm"] = String.IsNullOrEmpty(sortOrder) || sortOrder == "id_asc" ? "id_desc" : "id_asc";
+            ViewData["NameSortParm"] = sortOrder == "name_asc" ? "name_desc" : "name_asc";
+            ViewData["TurmaSortParm"] = sortOrder == "turma_asc" ? "turma_desc" : "turma_asc";
+            ViewData["AtivaSortParm"] = sortOrder == "ativa_asc" ? "ativa_desc" : "ativa_asc";
+            ViewData["EnderecoSortParm"] = sortOrder == "endereco_asc" ? "endereco_desc" : "endereco_asc";
+
+            var unidades = from u in _context.Unidade.Include(u => u.Turma) select u;
+
+            switch (sortOrder)
+            {
+                case "id_desc":
+                    unidades = unidades.OrderByDescending(u => u.Id);
+                    break;
+                case "name_asc":
+                    unidades = unidades.OrderBy(u => u.Nome);
+                    break;
+                case "name_desc":
+                    unidades = unidades.OrderByDescending(u => u.Nome);
+                    break;
+                case "turma_asc":
+                    unidades = unidades.OrderBy(u => u.Turma.Nome);
+                    break;
+                case "turma_desc":
+                    unidades = unidades.OrderByDescending(u => u.Turma.Nome);
+                    break;
+                case "ativa_asc":
+                    unidades = unidades.OrderBy(u => u.Ativa);
+                    break;
+                case "ativa_desc":
+                    unidades = unidades.OrderByDescending(u => u.Ativa);
+                    break;
+                case "endereco_asc":
+                    unidades = unidades.OrderBy(u => u.Endereco);
+                    break;
+                case "endereco_desc":
+                    unidades = unidades.OrderByDescending(u => u.Endereco);
+                    break;
+                default: // id_asc
+                    unidades = unidades.OrderBy(u => u.Id);
+                    break;
+            }
+
+            return View(await unidades.ToListAsync());
         }
 
-        public async Task<IActionResult> Create()
+        public async Task<IActionResult> Details(int? id)
         {
-            ViewBag.TurmaId = new SelectList(await _context.Turma.OrderBy(t => t.Nome).ToListAsync(), "Id", "Nome");
+            if (id == null) return NotFound();
+            var unidade = await _context.Unidade.Include(u => u.Turma).FirstOrDefaultAsync(m => m.Id == id);
+            if (unidade == null) return NotFound();
+            return View(unidade);
+        }
+
+        public IActionResult Create()
+        {
+            ViewBag.TurmaId = new SelectList(_context.Turma, "Id", "Nome");
             return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Nome,Descricao,Ativa,Endereco,TurmaId")] Unidade unidade)
+        public async Task<IActionResult> Create([Bind("Nome,Descricao,Endereco,TurmaId,Ativa")] Unidade unidade)
         {
             if (ModelState.IsValid)
             {
@@ -44,7 +92,7 @@ namespace MvcSaed.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewBag.TurmaId = new SelectList(await _context.Turma.OrderBy(t => t.Nome).ToListAsync(), "Id", "Nome", unidade.TurmaId);
+            ViewBag.TurmaId = new SelectList(_context.Turma, "Id", "Nome", unidade.TurmaId);
             return View(unidade);
         }
 
@@ -53,65 +101,31 @@ namespace MvcSaed.Controllers
             if (id == null) return NotFound();
             var unidade = await _context.Unidade.FindAsync(id);
             if (unidade == null) return NotFound();
-            ViewBag.TurmaId = new SelectList(await _context.Turma.OrderBy(t => t.Nome).ToListAsync(), "Id", "Nome", unidade.TurmaId);
+            ViewBag.TurmaId = new SelectList(_context.Turma, "Id", "Nome", unidade.TurmaId);
             return View(unidade);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Nome,Descricao,Ativa,Endereco,TurmaId")] Unidade unidade)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Nome,Descricao,Endereco,TurmaId,Ativa")] Unidade unidade)
         {
             if (id != unidade.Id) return NotFound();
             if (ModelState.IsValid)
             {
-                try
-                {
-                    _context.Update(unidade);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!await _context.Unidade.AnyAsync(e => e.Id == unidade.Id)) return NotFound();
-                    throw;
-                }
+                _context.Update(unidade);
+                await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewBag.TurmaId = new SelectList(await _context.Turma.OrderBy(t => t.Nome).ToListAsync(), "Id", "Nome", unidade.TurmaId);
-            return View(unidade);
-        }
-
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null) return NotFound();
-            var unidade = await _context.Unidade
-                .Include(u => u.Turma)
-                .FirstOrDefaultAsync(u => u.Id == id);
-            if (unidade == null) return NotFound();
+            ViewBag.TurmaId = new SelectList(_context.Turma, "Id", "Nome", unidade.TurmaId);
             return View(unidade);
         }
 
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null) return NotFound();
-            var unidade = await _context.Unidade
-                .Include(u => u.Turma)
-                .FirstOrDefaultAsync(u => u.Id == id);
+            var unidade = await _context.Unidade.Include(u => u.Turma).FirstOrDefaultAsync(m => m.Id == id);
             if (unidade == null) return NotFound();
-
             return View(unidade);
-        }
-
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            var unidade = await _context.Unidade.FindAsync(id);
-            if (unidade != null)
-            {
-                _context.Unidade.Remove(unidade);
-                await _context.SaveChangesAsync();
-            }
-            return RedirectToAction(nameof(Index));
         }
     }
 }

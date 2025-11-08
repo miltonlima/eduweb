@@ -1,17 +1,51 @@
 @model IEnumerable<MvcSaed.Models.Unidade>
 @{
     ViewData["Title"] = "Unidades";
+    var currentSort = ViewData["CurrentSort"] as string;
+
+    string GetSortIcon(string sortOrder)
+    {
+        if (currentSort == sortOrder)
+        {
+            return "<i class='fas fa-arrow-down ms-1'></i>";
+        }
+        if (currentSort == sortOrder.Replace("_desc", "_asc") || currentSort == sortOrder.Replace("_asc", "_desc"))
+        {
+            return "<i class='fas fa-arrow-up ms-1'></i>";
+        }
+        return "";
+    }
 }
 <h1>Unidades</h1>
 <p><a asp-action="Create" class="btn btn-primary"><i class="fas fa-plus"></i> Cadastrar Unidade</a></p>
 <table class="table table-striped">
     <thead>
         <tr>
-            <th>ID</th>
-            <th>Nome</th>
-            <th>Turma</th>
-            <th>Ativa</th>
-            <th>Endereço</th>
+            <th>
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["IdSortParm"]">
+                    ID @Html.Raw(GetSortIcon("id_desc"))
+                </a>
+            </th>
+            <th>
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["NameSortParm"]">
+                    Nome @Html.Raw(GetSortIcon("name_desc"))
+                </a>
+            </th>
+            <th>
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["TurmaSortParm"]">
+                    Turma @Html.Raw(GetSortIcon("turma_desc"))
+                </a>
+            </th>
+            <th>
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["AtivaSortParm"]">
+                    Ativa @Html.Raw(GetSortIcon("ativa_desc"))
+                </a>
+            </th>
+            <th>
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["EnderecoSortParm"]">
+                    Endereço @Html.Raw(GetSortIcon("endereco_desc"))
+                </a>
+            </th>
             <th></th>
         </tr>
     </thead>
@@ -37,3 +71,10 @@
 }
     </tbody>
 </table>
+
+<style>
+    .header-sort-link {
+        color: inherit; /* Herda a cor do elemento pai (th) */
+        text-decoration: none; /* Remove o sublinhado */
+    }
+</style>
